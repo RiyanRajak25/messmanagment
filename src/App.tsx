@@ -29,6 +29,8 @@ const PaymentsView = React.lazy(() => import('./roles/finance/PaymentsView'));
 const POFinancialView = React.lazy(() => import('./roles/finance/POFinancialView'));
 const FinanceAuditView = React.lazy(() => import('./roles/finance/FinanceAuditView'));
 const VendorDashboard = React.lazy(() => import('./roles/vendor/VendorDashboard'));
+const VendorDispatchView = React.lazy(() => import('./roles/vendor/VendorDispatchView'));
+const VendorPerformanceView = React.lazy(() => import('./roles/vendor/VendorPerformanceView'));
 const MessFeedbackView = React.lazy(() => import('./roles/messmanager/MessFeedbackView'));
 
 // Loading Fallback with Operational Radar Pulse
@@ -180,8 +182,8 @@ export const App: React.FC = () => {
                       <Routes>
                         <Route index element={<VendorDashboard />} />
                         <Route path="orders" element={<VendorDashboard />} />
-                        <Route path="dispatch" element={<VendorDashboard />} />
-                        <Route path="performance" element={<VendorDashboard />} />
+                        <Route path="dispatch" element={<VendorDispatchView />} />
+                        <Route path="performance" element={<VendorPerformanceView />} />
                       </Routes>
                     </Suspense>
                   </AppShell>

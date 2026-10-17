@@ -3,9 +3,9 @@ import { api } from '../../api/client';
 import { Budget, Mess, Expenditure } from '../../types';
 import { Card } from '../../components/Card';
 import { Button } from '../../components/Button';
-import { StatTile } from '../../components/StatTile';
 import { Modal } from '../../components/Modal';
 import { useToast } from '../../components/Toast';
+import { Badge, Breadcrumb, StatCard, TableControls, Accordion } from '../../components/ui';
 import {
   Landmark,
   Plus,
@@ -17,6 +17,11 @@ import {
   CheckCircle2,
   Mountain,
   Search,
+  Sliders,
+  ShieldCheck,
+  PiggyBank,
+  ArrowRightLeft,
+  FileText,
 } from 'lucide-react';
 
 export const BudgetsView: React.FC = () => {
@@ -26,7 +31,10 @@ export const BudgetsView: React.FC = () => {
   const [expenditures, setExpenditures] = useState<Expenditure[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [filterMode, setFilterMode] = useState<string>('all');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAdjustModalOpen, setIsAdjustModalOpen] = useState(false);
+  const [selectedBudgetToAdjust, setSelectedBudgetToAdjust] = useState<Budget | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // New Budget Form state
@@ -34,6 +42,12 @@ export const BudgetsView: React.FC = () => {
   const [periodStart, setPeriodStart] = useState('2026-10-01');
   const [periodEnd, setPeriodEnd] = useState('2026-10-31');
   const [allocatedAmount, setAllocatedAmount] = useState('350000');
+
+  // Adjustment Modal Form state
+  const [adjustType, setAdjustType] = useState<'supplementary' | 'reduction' | 'reappropriate'>('supplementary');
+  const [adjustAmount, setAdjustAmount] = useState('50000');
+  const [sanctionOrderNo, setSanctionOrderNo] = useState(`SAN/FIN/2026/SUPP-${Math.floor(10 + Math.random() * 90)}`);
+  const [adjustReason, setAdjustReason] = useState('High-altitude winter buffer supplement sanctioned by Station Command.');
 
   useEffect(() => {
     async function load() {
@@ -88,6 +102,42 @@ export const BudgetsView: React.FC = () => {
     }
   };
 
+  const handleApplyAdjustment = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedBudgetToAdjust) return;
+
+    const delta = parseFloat(adjustAmount);
+    if (!delta || delta <= 0) {
+      toast({ type: 'error', title: 'Invalid Amount', message: 'Enter a valid positive adjustment amount.' });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setBudgets((prev) =>
+        prev.map((b) => {
+          if (b.id !== selectedBudgetToAdjust.id) return b;
+          const newAllocated =
+            adjustType === 'reduction'
+              ? Math.max(50000, b.allocated_amount - delta)
+              : b.allocated_amount + delta;
+          return {
+            ...b,
+            allocated_amount: newAllocated,
+          };
+        })
+      );
+
+      setIsSubmitting(false);
+      setIsAdjustModalOpen(false);
+
+      toast({
+        title: 'Grant Cap Adjusted',
+        message: `Sanction ${sanctionOrderNo} recorded. Budget updated to reflect ₹${delta.toLocaleString('en-IN')} adjustment.`,
+      });
+    }, 400);
+  };
+
   const exportCSV = () => {
     if (budgets.length === 0) {
       toast({ type: 'warning', title: 'No Data', message: 'No budget records available for export.' });
@@ -131,16 +181,28 @@ export const BudgetsView: React.FC = () => {
   const filteredBudgets = budgets.filter((b) => {
     const mess = messes.find((m) => m.id === b.mess_id);
     const q = searchQuery.toLowerCase();
-    return (
+    const matchesSearch =
       (mess && mess.name.toLowerCase().includes(q)) ||
       b.period_start.includes(q) ||
       b.period_end.includes(q) ||
-      b.id.toLowerCase().includes(q)
-    );
+      b.id.toLowerCase().includes(q);
+
+    if (!matchesSearch) return false;
+    if (filterMode === 'high_cap') return b.allocated_amount >= 300000;
+    if (filterMode === 'active_cycle') return b.period_end >= '2026-10-15';
+    return true;
   });
 
   return (
     <div className="flex flex-col gap-6 pb-12 font-body text-pine">
+      {/* Navigation Breadcrumb */}
+      <Breadcrumb
+        items={[
+          { label: 'Central Accounts', href: '/finance' },
+          { label: 'Sanctioned Budgets & Mess Grants', current: true },
+        ]}
+      />
+
       {/* Header Banner */}
       <div className="p-6 md:p-8 bg-night text-snow rounded-card border border-sand/40 shadow-elevation flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-start gap-4">
@@ -156,7 +218,7 @@ export const BudgetsView: React.FC = () => {
               Sanctioned Mess Budgets &amp; Grant Utilization
             </h1>
             <p className="text-xs text-sand font-medium mt-1">
-              Statutory fiscal ceilings, monthly mess allotments, and quota consumption compliance.
+              Amit Sharma, IDAS • Statutory fiscal ceilings, monthly mess allotments, and quota consumption compliance.
             </p>
           </div>
         </div>
@@ -182,54 +244,55 @@ export const BudgetsView: React.FC = () => {
         </div>
       </div>
 
-      {/* KPI Tiles */}
+      {/* Modern High-Precision Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatTile
+        <StatCard
           label="Total Sanctioned Grant"
           value={`₹${totalSanctioned.toLocaleString('en-IN')}`}
-          subValue={`Across ${messes.length || 3} institutional messes`}
           icon={<Landmark className="w-5 h-5 text-gold" />}
-          accentColor="gold"
+          trend={{ value: '3 Messes', direction: 'neutral' }}
+          subtitle="FY-26 Allocation"
+          variant="gold"
         />
-        <StatTile
+        <StatCard
           label="Cumulative Expenditure"
           value={`₹${totalSpent.toLocaleString('en-IN')}`}
-          subValue={`${Math.round((totalSpent / (totalSanctioned || 1)) * 100)}% of grant utilized`}
-          trend={{ value: 'Under Ceiling', isPositive: true }}
           icon={<TrendingUp className="w-5 h-5 text-glacier" />}
-          accentColor="glacier"
+          trend={{ value: `${Math.round((totalSpent / (totalSanctioned || 1)) * 100)}% Cap Used`, direction: 'up', label: 'Cap safe' }}
+          subtitle="Audited ledger"
         />
-        <StatTile
+        <StatCard
           label="Remaining Fiscal Buffer"
           value={`₹${(remainingTotal > 0 ? remainingTotal : 0).toLocaleString('en-IN')}`}
-          subValue="Available for subsequent PO indents"
           icon={<CheckCircle2 className="w-5 h-5 text-success" />}
-          accentColor="success"
+          trend={{ value: 'Uncommitted', direction: 'neutral' }}
+          subtitle="Buffer available"
         />
-        <StatTile
+        <StatCard
           label="Active Allocation Periods"
           value={`${budgets.length}`}
-          subValue="Audited monthly grant cycles"
           icon={<Calendar className="w-5 h-5 text-olive" />}
-          accentColor="olive"
+          trend={{ value: 'Q3 Cycle', direction: 'neutral', label: '100% Reconciled' }}
+          subtitle="Monthly grants"
         />
       </div>
 
-      {/* Search & Filter Bar */}
-      <Card className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 border border-sand/60 bg-white">
-        <div className="relative flex-1">
-          <Search className="w-4 h-4 text-pine/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="Search by mess facility, grant ID, or fiscal period..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs font-mono font-medium rounded-control border border-sand bg-snow focus:outline-none focus:border-olive focus:ring-1 focus:ring-olive text-olive-deep placeholder:text-pine/40"
-          />
-        </div>
-        <span className="text-xs text-pine/60 font-mono font-bold">
-          Showing {filteredBudgets.length} of {budgets.length} records
-        </span>
+      {/* Modern Table Controls & Filters Toolbar */}
+      <Card className="p-4 bg-white border border-sand/60 shadow-subtle">
+        <TableControls<string>
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          searchPlaceholder="Search by mess facility name, grant ID, or fiscal period..."
+          filterChips={[
+            { id: 'all', label: 'All Grants', count: budgets.length },
+            { id: 'high_cap', label: 'Major Grants (₹3L+)', count: budgets.filter((b) => b.allocated_amount >= 300000).length },
+            { id: 'active_cycle', label: 'Active Cycle', count: budgets.filter((b) => b.period_end >= '2026-10-15').length },
+          ]}
+          activeFilter={filterMode}
+          onFilterChange={setFilterMode}
+          totalResults={filteredBudgets.length}
+          onExport={exportCSV}
+        />
       </Card>
 
       {/* Sanctioned Budget Allocations Table */}
@@ -259,18 +322,19 @@ export const BudgetsView: React.FC = () => {
                 <th className="py-3 px-4 text-right">Disbursed (Est.)</th>
                 <th className="py-3 px-4">Utilization Gauge</th>
                 <th className="py-3 px-4 text-center">Audit Status</th>
+                <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-sand/20 text-xs font-sans text-olive-deep">
               {isLoading ? (
                 <tr>
-                  <td colSpan={7} className="py-8 text-center text-pine/60">
+                  <td colSpan={8} className="py-8 text-center text-pine/60">
                     Loading sanctioned fiscal grants...
                   </td>
                 </tr>
               ) : filteredBudgets.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-8 text-center text-pine/60 italic">
+                  <td colSpan={8} className="py-8 text-center text-pine/60 italic">
                     No budget grants found matching criteria.
                   </td>
                 </tr>
@@ -303,11 +367,11 @@ export const BudgetsView: React.FC = () => {
                         {b.period_start} to {b.period_end}
                       </td>
 
-                      <td className="py-3.5 px-4 text-right font-mono font-bold text-olive-deep">
+                      <td className="py-3.5 px-4 text-right font-mono font-bold text-olive-deep text-sm">
                         ₹{b.allocated_amount.toLocaleString('en-IN')}
                       </td>
 
-                      <td className="py-3.5 px-4 text-right font-mono font-bold text-pine/80">
+                      <td className="py-3.5 px-4 text-right font-mono font-bold text-pine/80 text-sm">
                         ₹{Math.round(spent).toLocaleString('en-IN')}
                       </td>
 
@@ -327,9 +391,24 @@ export const BudgetsView: React.FC = () => {
                       </td>
 
                       <td className="py-3.5 px-4 text-center">
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-badge bg-success/10 text-success border border-success/30 font-mono text-[10px] font-bold">
-                          <CheckCircle2 className="w-3 h-3" /> VERIFIED
-                        </span>
+                        <Badge variant="success">
+                          <CheckCircle2 className="w-3 h-3 mr-1" /> VERIFIED
+                        </Badge>
+                      </td>
+
+                      <td className="py-3.5 px-4 text-right">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setSelectedBudgetToAdjust(b);
+                            setIsAdjustModalOpen(true);
+                          }}
+                          icon={<Sliders className="w-3 h-3" />}
+                          className="text-xs font-bold"
+                        >
+                          Adjust
+                        </Button>
                       </td>
                     </tr>
                   );
@@ -340,7 +419,51 @@ export const BudgetsView: React.FC = () => {
         </div>
       </div>
 
-      {/* Modal: Sanction New Grant */}
+      {/* Progressive Disclosure: Central Financial Rules Accordion */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-2 px-1">
+          <ShieldCheck className="w-4 h-4 text-gold" />
+          <h4 className="font-heading font-extrabold text-xs uppercase tracking-wider text-olive-deep">
+            General Financial Rules (GFR 2017) &amp; Re-Appropriation Norms
+          </h4>
+        </div>
+        <Accordion
+          items={[
+            {
+              id: 'reappropriation-rules',
+              title: 'Statutory Re-Appropriation & Supplementary Sanction Protocol',
+              subtitle: 'Sub-head ceiling adjustment within authorized mess grant',
+              badge: <Badge variant="gold">STATUTORY</Badge>,
+              children: (
+                <div className="text-xs text-pine/80 space-y-2 leading-relaxed pt-2">
+                  <p>
+                    Re-appropriation of funds between individual mess grants is governed under <strong>Rule 10 of General Financial Rules</strong>. Savings from dry staples may be transferred to fresh provisions with formal audit endorsement from the Central Accounts Officer.
+                  </p>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>No re-appropriation is permissible from capital grant to operational rations expenditure.</li>
+                    <li>Supplementary grants must cite valid headcount spikes or winter buffer mandates.</li>
+                    <li>Unspent grant balances at fiscal year-end are surrendered automatically to the Treasury.</li>
+                  </ul>
+                </div>
+              ),
+            },
+            {
+              id: 'burn-rate-controls',
+              title: 'Quarterly Burn Rate Controls & Warning Thresholds',
+              subtitle: 'Automated expenditure velocity monitoring',
+              children: (
+                <div className="text-xs text-pine/80 space-y-2 leading-relaxed pt-2">
+                  <p>
+                    If monthly expenditure exceeds <strong>85%</strong> of the prorated calendar allocation before day 20 of the billing cycle, the system initiates an automated fiscal audit inquiry requiring the Mess Manager's counter-justification.
+                  </p>
+                </div>
+              ),
+            },
+          ]}
+        />
+      </div>
+
+      {/* MODAL: SANCTION NEW GRANT */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -350,7 +473,7 @@ export const BudgetsView: React.FC = () => {
         <form onSubmit={handleCreateBudget} className="flex flex-col gap-4 font-body text-pine mt-2">
           <div>
             <label className="block text-xs font-heading font-bold text-olive uppercase mb-1">
-              Select Mess Facility
+              Select Mess Facility *
             </label>
             <select
               value={selectedMessId}
@@ -368,7 +491,7 @@ export const BudgetsView: React.FC = () => {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-heading font-bold text-olive uppercase mb-1">
-                Period Start Date
+                Period Start Date *
               </label>
               <input
                 type="date"
@@ -380,7 +503,7 @@ export const BudgetsView: React.FC = () => {
             </div>
             <div>
               <label className="block text-xs font-heading font-bold text-olive uppercase mb-1">
-                Period End Date
+                Period End Date *
               </label>
               <input
                 type="date"
@@ -394,7 +517,7 @@ export const BudgetsView: React.FC = () => {
 
           <div>
             <label className="block text-xs font-heading font-bold text-olive uppercase mb-1">
-              Sanctioned Grant Amount (INR)
+              Sanctioned Grant Amount (INR) *
             </label>
             <div className="relative">
               <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-mono font-bold text-olive-deep">
@@ -443,6 +566,112 @@ export const BudgetsView: React.FC = () => {
           </div>
         </form>
       </Modal>
+
+      {/* MODAL: ADJUST / RE-APPROPRIATE EXISTING GRANT */}
+      {isAdjustModalOpen && selectedBudgetToAdjust && (
+        <Modal
+          isOpen={isAdjustModalOpen}
+          onClose={() => setIsAdjustModalOpen(false)}
+          title="Supplementary Grant &amp; Re-Appropriation"
+          description={`Adjust Statutory Ceiling for ${messes.find((m) => m.id === selectedBudgetToAdjust.mess_id)?.name || selectedBudgetToAdjust.mess_id} • ${selectedBudgetToAdjust.id}`}
+        >
+          <form onSubmit={handleApplyAdjustment} className="flex flex-col gap-4 font-body text-pine mt-2">
+            <div className="p-3 bg-snow rounded border border-sand/40 flex justify-between items-center text-xs font-mono">
+              <div>
+                <span className="text-pine/60 text-[10px] uppercase font-bold block">Current Ceiling</span>
+                <strong className="text-sm text-olive-deep">₹{selectedBudgetToAdjust.allocated_amount.toLocaleString('en-IN')}</strong>
+              </div>
+              <div className="text-right">
+                <span className="text-pine/60 text-[10px] uppercase font-bold block">Fiscal Period</span>
+                <span>{selectedBudgetToAdjust.period_start} to {selectedBudgetToAdjust.period_end}</span>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-heading font-bold text-olive uppercase mb-1">
+                Adjustment Category *
+              </label>
+              <select
+                value={adjustType}
+                onChange={(e) => setAdjustType(e.target.value as any)}
+                className="w-full px-3 py-2 text-xs font-sans rounded-control border border-sand bg-snow text-olive-deep focus:outline-none focus:border-olive"
+              >
+                <option value="supplementary">Supplementary Grant Allocation (+ Increase)</option>
+                <option value="reduction">Surplus Grant Surrender (- Reduction)</option>
+                <option value="reappropriate">Inter-Mess Re-Appropriation Transfer</option>
+              </select>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-heading font-bold text-olive uppercase mb-1">
+                  Adjustment Delta (INR) *
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-mono font-bold text-olive-deep">
+                    ₹
+                  </span>
+                  <input
+                    type="number"
+                    min="1000"
+                    step="500"
+                    value={adjustAmount}
+                    onChange={(e) => setAdjustAmount(e.target.value)}
+                    required
+                    className="w-full pl-8 pr-4 py-2 text-xs font-mono font-bold rounded-control border border-sand bg-snow text-olive-deep focus:outline-none focus:border-olive"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-heading font-bold text-olive uppercase mb-1">
+                  Sanction Order Reference *
+                </label>
+                <input
+                  type="text"
+                  value={sanctionOrderNo}
+                  onChange={(e) => setSanctionOrderNo(e.target.value)}
+                  required
+                  className="w-full px-3 py-2 text-xs font-mono font-bold rounded-control border border-sand bg-snow text-olive-deep focus:outline-none focus:border-olive"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-heading font-bold text-olive uppercase mb-1">
+                Sanction Justification Notes *
+              </label>
+              <textarea
+                value={adjustReason}
+                onChange={(e) => setAdjustReason(e.target.value)}
+                required
+                rows={2}
+                className="w-full px-3 py-2 text-xs font-sans rounded-control border border-sand bg-snow text-olive-deep focus:outline-none focus:border-olive resize-none"
+              />
+            </div>
+
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-sand/40">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setIsAdjustModalOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                variant="primary"
+                size="sm"
+                disabled={isSubmitting}
+                icon={<ArrowRightLeft className="w-3.5 h-3.5" />}
+              >
+                {isSubmitting ? 'Recording Sanction...' : 'Confirm Ceiling Adjustment'}
+              </Button>
+            </div>
+          </form>
+        </Modal>
+      )}
     </div>
   );
 };

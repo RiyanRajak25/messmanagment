@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../../api/client';
 import { PurchaseOrder, Vendor, Item } from '../../types';
 import { Card } from '../../components/Card';
@@ -20,6 +21,11 @@ import {
   FileText,
   ShieldCheck,
   AlertTriangle,
+  PackageCheck,
+  TrendingUp,
+  Printer,
+  Eye,
+  QrCode,
 } from 'lucide-react';
 
 interface DispatchRecord {
@@ -34,9 +40,12 @@ interface DispatchRecord {
 }
 
 export const VendorDashboard: React.FC = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [vendors, setVendors] = useState<Vendor[]>([]);
   const [selectedVendorId, setSelectedVendorId] = useState<string>('vendor-1');
+  const [selectedPoDetails, setSelectedPoDetails] = useState<PurchaseOrder | null>(null);
+  const [acknowledgedPos, setAcknowledgedPos] = useState<Record<string, boolean>>({});
   const [pos, setPos] = useState<PurchaseOrder[]>([]);
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -252,6 +261,36 @@ export const VendorDashboard: React.FC = () => {
         </div>
       </div>
 
+      {/* Operational Module Sub-Navigation Bar */}
+      <div className="bg-white border border-sand/60 rounded-card p-1.5 shadow-subtle overflow-x-auto no-scrollbar">
+        <div className="flex items-center gap-1.5 min-w-max">
+          <button
+            type="button"
+            onClick={() => navigate('/vendor')}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-control text-xs font-heading font-bold bg-olive text-snow shadow-subtle border border-sand/30 transition-all"
+          >
+            <PackageCheck className="w-3.5 h-3.5 text-gold" />
+            <span>Supplier Orders &amp; Indents</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/vendor/dispatch')}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-control text-xs font-heading font-bold text-olive hover:text-olive-deep hover:bg-snow transition-all"
+          >
+            <Truck className="w-3.5 h-3.5 text-sand" />
+            <span>Consignment Dispatch &amp; Gate Passes</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/vendor/performance')}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-control text-xs font-heading font-bold text-olive hover:text-olive-deep hover:bg-snow transition-all"
+          >
+            <TrendingUp className="w-3.5 h-3.5 text-sand" />
+            <span>SLA &amp; Delivery Scorecard</span>
+          </button>
+        </div>
+      </div>
+
       {/* Modern High-Precision Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
@@ -419,21 +458,32 @@ export const VendorDashboard: React.FC = () => {
                       </td>
 
                       <td className="py-3.5 px-4 text-right">
-                        {isDelivered ? (
-                          <span className="text-xs font-mono font-bold text-success">
-                            Receipt Confirmed ✓
-                          </span>
-                        ) : (
-                          <Button
-                            variant={dispatch ? 'outline' : 'primary'}
-                            size="sm"
-                            onClick={() => handleOpenDispatchModal(po)}
-                            icon={<Send className="w-3 h-3" />}
-                            className="text-xs font-bold"
+                        <div className="flex items-center justify-end gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => setSelectedPoDetails(po)}
+                            className="p-1.5 rounded-control border border-sand bg-snow hover:bg-white text-olive hover:text-olive-deep transition-colors"
+                            title="Inspect &amp; Print Supply Order"
                           >
-                            {dispatch ? 'Update ASN' : 'Dispatch Consignment'}
-                          </Button>
-                        )}
+                            <Eye className="w-3.5 h-3.5" />
+                          </button>
+
+                          {isDelivered ? (
+                            <span className="text-xs font-mono font-bold text-success px-2 py-1 bg-success/10 rounded">
+                              Fulfilled ✓
+                            </span>
+                          ) : (
+                            <Button
+                              variant={dispatch ? 'outline' : 'primary'}
+                              size="sm"
+                              onClick={() => handleOpenDispatchModal(po)}
+                              icon={<Send className="w-3 h-3" />}
+                              className="text-xs font-bold"
+                            >
+                              {dispatch ? 'Update ASN' : 'Dispatch'}
+                            </Button>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   );
@@ -620,6 +670,131 @@ export const VendorDashboard: React.FC = () => {
               </Button>
             </div>
           </form>
+        </Modal>
+      )}
+
+      {/* OFFICIAL PURCHASE ORDER INSPECTION & PRINT MODAL */}
+      {selectedPoDetails && (
+        <Modal
+          isOpen={Boolean(selectedPoDetails)}
+          onClose={() => setSelectedPoDetails(null)}
+          title="Official Supply Order (PO) Details & Terms"
+          description={`Central Supply Directorate • Indent Ref: ${selectedPoDetails.id}`}
+        >
+          <div className="flex flex-col gap-4 font-body text-pine mt-2">
+            <div className="p-4 rounded-card border-2 border-olive bg-white space-y-3">
+              <div className="flex items-start justify-between border-b border-sand/40 pb-3">
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-olive font-extrabold block">
+                    CENTRAL SUPPLY DEPOT • PURCHASE ORDER
+                  </span>
+                  <h4 className="font-heading font-extrabold text-base text-olive-deep">
+                    Contract Indent #{selectedPoDetails.id}
+                  </h4>
+                  <span className="text-xs text-pine/60 font-mono">
+                    Date of Issue: {selectedPoDetails.created_at.split('T')[0]}
+                  </span>
+                </div>
+                <div className="p-2 border border-sand bg-snow rounded text-center shrink-0">
+                  <QrCode className="w-10 h-10 text-olive mx-auto" />
+                  <span className="text-[9px] font-mono text-pine/60 block mt-0.5">PO VERIFIED</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 text-xs bg-snow p-2.5 rounded border border-sand/30 font-mono">
+                <div>
+                  <span className="text-[10px] text-pine/60 font-sans uppercase font-bold block">Contractor Agency</span>
+                  <strong className="text-olive-deep text-sm block">{activeVendor?.name}</strong>
+                  <span className="text-pine/70 text-[11px]">GSTIN: {activeVendor?.tax_id}</span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-pine/60 font-sans uppercase font-bold block">Delivery Location</span>
+                  <strong className="text-pine text-sm block">Central Supply Depot Bay 01</strong>
+                  <span className="text-pine/70 text-[11px]">Intake Lead Time: 5 Business Days</span>
+                </div>
+              </div>
+
+              <div className="overflow-x-auto rounded border border-sand/40">
+                <table className="w-full text-xs text-left">
+                  <thead className="bg-olive text-snow text-[10px] font-heading font-bold uppercase">
+                    <tr>
+                      <th className="p-2">Item Description</th>
+                      <th className="p-2 text-right">Ordered Qty</th>
+                      <th className="p-2 text-right">Contract Rate</th>
+                      <th className="p-2 text-right">Subtotal</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-sand/20">
+                    {selectedPoDetails.lines.map((l) => {
+                      const item = getItem(l.item_id);
+                      return (
+                        <tr key={l.item_id}>
+                          <td className="p-2 font-bold text-olive-deep">
+                            {item?.name || l.item_id}
+                          </td>
+                          <td className="p-2 text-right font-mono">
+                            {l.ordered_qty} {item?.unit || 'kg'}
+                          </td>
+                          <td className="p-2 text-right font-mono">
+                            ₹{l.unit_price}
+                          </td>
+                          <td className="p-2 text-right font-mono font-bold text-olive-deep">
+                            ₹{(l.ordered_qty * l.unit_price).toLocaleString('en-IN')}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="flex justify-between items-center text-sm font-extrabold text-olive-deep pt-1 border-t border-sand/40">
+                <span>Total Contracted Indent Value:</span>
+                <span className="font-mono text-base">
+                  ₹{calculatePoTotal(selectedPoDetails).toLocaleString('en-IN')}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between pt-2 border-t border-sand/40">
+              <Button
+                type="button"
+                variant={acknowledgedPos[selectedPoDetails.id] ? 'outline' : 'primary'}
+                size="sm"
+                onClick={() => {
+                  setAcknowledgedPos((prev) => ({ ...prev, [selectedPoDetails.id]: true }));
+                  toast({
+                    title: 'PO Acknowledged',
+                    message: `Official acknowledgment sent to Central Depot Storekeeper for ${selectedPoDetails.id}.`,
+                  });
+                }}
+                icon={<CheckCircle2 className="w-3.5 h-3.5" />}
+              >
+                {acknowledgedPos[selectedPoDetails.id] ? 'Acknowledged ✓' : 'Acknowledge & Confirm PO'}
+              </Button>
+
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSelectedPoDetails(null)}
+                >
+                  Close
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    window.print();
+                    toast({ title: 'Print Order', message: 'Purchase Order sent to printer.' });
+                  }}
+                  icon={<Printer className="w-3.5 h-3.5" />}
+                >
+                  Print Supply Order
+                </Button>
+              </div>
+            </div>
+          </div>
         </Modal>
       )}
     </div>

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../../api/client';
 import { PurchaseOrder, Vendor, Item } from '../../types';
 import { Card } from '../../components/Card';
 import { Button } from '../../components/Button';
-import { StatTile } from '../../components/StatTile';
 import { Modal } from '../../components/Modal';
 import { useToast } from '../../components/Toast';
+import { Badge, Breadcrumb, StatCard, TableControls, Accordion } from '../../components/ui';
 import {
   FileText,
   FileSpreadsheet,
@@ -15,9 +16,17 @@ import {
   Search,
   Scale,
   Mountain,
+  ShieldCheck,
+  Printer,
+  CreditCard,
+  QrCode,
+  DollarSign,
+  AlertTriangle,
+  Receipt,
 } from 'lucide-react';
 
 export const POFinancialView: React.FC = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [pos, setPos] = useState<PurchaseOrder[]>([]);
   const [vendors, setVendors] = useState<Vendor[]>([]);
@@ -26,6 +35,8 @@ export const POFinancialView: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [selectedPo, setSelectedPo] = useState<PurchaseOrder | null>(null);
+  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
+  const [preClearedPos, setPreClearedPos] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     async function load() {
@@ -121,6 +132,14 @@ export const POFinancialView: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-6 pb-12 font-body text-pine">
+      {/* Navigation Breadcrumb */}
+      <Breadcrumb
+        items={[
+          { label: 'Central Accounts', href: '/finance' },
+          { label: 'Commercial Contract Indents & PO Ledger', current: true },
+        ]}
+      />
+
       {/* Header Banner */}
       <div className="p-6 md:p-8 bg-night text-snow rounded-card border border-sand/40 shadow-elevation flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-start gap-4">
@@ -154,64 +173,56 @@ export const POFinancialView: React.FC = () => {
         </div>
       </div>
 
-      {/* KPI Tiles */}
+      {/* Modern High-Precision Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatTile
+        <StatCard
           label="Total Contract Commitment"
           value={`₹${totalCommittedValue.toLocaleString('en-IN')}`}
-          subValue={`Across ${pos.length} purchase orders`}
           icon={<FileText className="w-5 h-5 text-gold" />}
-          accentColor="gold"
+          trend={{ value: `${pos.length} Orders`, direction: 'neutral' }}
+          subtitle="Annual procurement"
+          variant="gold"
         />
-        <StatTile
-          label="Delivered &amp; Reconciled"
+        <StatCard
+          label="Delivered & Reconciled"
           value={`₹${totalDeliveredValue.toLocaleString('en-IN')}`}
-          subValue={`${Math.round((totalDeliveredValue / (totalCommittedValue || 1)) * 100)}% received in silos`}
-          trend={{ value: 'Verified', isPositive: true }}
           icon={<CheckCircle2 className="w-5 h-5 text-success" />}
-          accentColor="success"
+          trend={{ value: `${Math.round((totalDeliveredValue / (totalCommittedValue || 1)) * 100)}% Fulfilled`, direction: 'up', label: 'Depot received' }}
+          subtitle="Passed QC test"
         />
-        <StatTile
+        <StatCard
           label="Pending Consignment Value"
           value={`₹${(totalPendingValue > 0 ? totalPendingValue : 0).toLocaleString('en-IN')}`}
-          subValue="Awaiting depot bay unload"
           icon={<Clock className="w-5 h-5 text-glacier" />}
-          accentColor="glacier"
+          trend={{ value: 'In-Transit', direction: 'neutral' }}
+          subtitle="Awaiting bay intake"
         />
-        <StatTile
+        <StatCard
           label="Certified Supply Agencies"
           value={`${vendors.length}`}
-          subValue="Active tender contracts"
           icon={<Building className="w-5 h-5 text-olive" />}
-          accentColor="olive"
+          trend={{ value: '100% Empaneled', direction: 'up', label: 'Verified GST' }}
+          subtitle="Active vendors"
         />
       </div>
 
-      {/* Filter and Search Bar */}
-      <Card className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 border border-sand/60 bg-white">
-        <div className="relative flex-1">
-          <Search className="w-4 h-4 text-pine/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="Search by PO ID, vendor name, or commodity..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs font-mono font-medium rounded-control border border-sand bg-snow focus:outline-none focus:border-olive focus:ring-1 focus:ring-olive text-olive-deep placeholder:text-pine/40"
-          />
-        </div>
-
-        <div className="flex items-center gap-2">
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 text-xs font-heading font-semibold rounded-control border border-sand bg-white text-olive-deep focus:outline-none focus:border-olive"
-          >
-            <option value="all">All PO Statuses</option>
-            <option value="open">Open / In Transit</option>
-            <option value="partial">Partially Delivered</option>
-            <option value="closed">Closed &amp; Settled</option>
-          </select>
-        </div>
+      {/* Modern Table Controls & Filters Toolbar */}
+      <Card className="p-4 bg-white border border-sand/60 shadow-subtle">
+        <TableControls<string>
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          searchPlaceholder="Search by PO ID, vendor name, or commodity..."
+          filterChips={[
+            { id: 'all', label: 'All Orders', count: pos.length },
+            { id: 'open', label: 'Open / In Transit', count: pos.filter((p) => p.status === 'open').length },
+            { id: 'partially_received', label: 'Partially Received', count: pos.filter((p) => p.status === 'partially_received').length },
+            { id: 'closed', label: 'Closed & Settled', count: pos.filter((p) => p.status === 'closed').length },
+          ]}
+          activeFilter={statusFilter}
+          onFilterChange={setStatusFilter}
+          totalResults={filteredPos.length}
+          onExport={exportCSV}
+        />
       </Card>
 
       {/* PO Financial Ledger Table */}
@@ -240,19 +251,20 @@ export const POFinancialView: React.FC = () => {
                 <th className="py-3 px-4 text-right">Committed Value</th>
                 <th className="py-3 px-4 text-right">Delivered Value</th>
                 <th className="py-3 px-4 text-center">Fulfillment Status</th>
-                <th className="py-3 px-4 text-right">Inspection</th>
+                <th className="py-3 px-4 text-center">Pre-Clearance</th>
+                <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-sand/20 text-xs font-sans text-olive-deep">
               {isLoading ? (
                 <tr>
-                  <td colSpan={7} className="py-8 text-center text-pine/60">
+                  <td colSpan={8} className="py-8 text-center text-pine/60">
                     Loading commercial orders...
                   </td>
                 </tr>
               ) : filteredPos.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-8 text-center text-pine/60 italic">
+                  <td colSpan={8} className="py-8 text-center text-pine/60 italic">
                     No purchase orders match the filter criteria.
                   </td>
                 </tr>
@@ -262,6 +274,7 @@ export const POFinancialView: React.FC = () => {
                   const total = calculatePoTotal(po);
                   const delivered = calculatePoDeliveredValue(po);
                   const isFullyDelivered = po.lines.every((l) => l.received_qty >= l.ordered_qty);
+                  const isPreCleared = preClearedPos[po.id];
 
                   return (
                     <tr key={po.id} className="hover:bg-snow/60 transition-colors">
@@ -309,16 +322,28 @@ export const POFinancialView: React.FC = () => {
 
                       <td className="py-3.5 px-4 text-center">
                         {isFullyDelivered ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-badge bg-success/10 text-success border border-success/30 font-mono text-[10px] font-bold">
-                            <CheckCircle2 className="w-3 h-3" /> FULFILLED
-                          </span>
+                          <Badge variant="success">
+                            <CheckCircle2 className="w-3 h-3 mr-1" /> FULFILLED
+                          </Badge>
                         ) : delivered > 0 ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-badge bg-gold/15 text-gold border border-gold/40 font-mono text-[10px] font-bold">
-                            <Clock className="w-3 h-3" /> PARTIAL
+                          <Badge variant="gold" pulse>
+                            <Clock className="w-3 h-3 mr-1" /> PARTIAL
+                          </Badge>
+                        ) : (
+                          <Badge variant="glacier">
+                            <Clock className="w-3 h-3 mr-1" /> IN TRANSIT
+                          </Badge>
+                        )}
+                      </td>
+
+                      <td className="py-3.5 px-4 text-center">
+                        {isPreCleared ? (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold text-success bg-success/15 border border-success/30 px-2 py-0.5 rounded">
+                            <CheckCircle2 className="w-3 h-3" /> AUDITED
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-badge bg-glacier/15 text-glacier border border-glacier/30 font-mono text-[10px] font-bold">
-                            <Clock className="w-3 h-3" /> IN TRANSIT
+                          <span className="text-[10px] font-mono text-pine/50">
+                            Pending Audit
                           </span>
                         )}
                       </td>
@@ -342,12 +367,59 @@ export const POFinancialView: React.FC = () => {
         </div>
       </div>
 
-      {/* PO Audit Details Modal */}
+      {/* Progressive Disclosure: Commercial Contracts Accordion */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-2 px-1">
+          <ShieldCheck className="w-4 h-4 text-gold" />
+          <h4 className="font-heading font-extrabold text-xs uppercase tracking-wider text-olive-deep">
+            Commercial Procurement &amp; Invoice Settlement Regulations
+          </h4>
+        </div>
+        <Accordion
+          items={[
+            {
+              id: 'invoice-3way',
+              title: 'Mandatory 3-Way Invoice Matching Rule (PO vs Challan vs GRN)',
+              subtitle: 'Pre-requisite for all Treasury disbursements',
+              badge: <Badge variant="gold">AUDIT DIRECTIVE</Badge>,
+              children: (
+                <div className="text-xs text-pine/80 space-y-2 leading-relaxed pt-2">
+                  <p>
+                    Disbursement vouchers are authorized only after an automated 3-way match verifies:
+                  </p>
+                  <ol className="list-decimal pl-5 space-y-1">
+                    <li>Sanctioned rates on the original Purchase Order.</li>
+                    <li>Transporter Delivery Challan and verified container seal numbers.</li>
+                    <li>Actual accepted net weight recorded on the Storekeeper’s Goods Receipt Note (GRN).</li>
+                  </ol>
+                  <p className="text-pine/70 font-mono text-[11px] pt-1">
+                    Discrepancies exceeding 0.5% require physical reconciliation before RTGS issuance.
+                  </p>
+                </div>
+              ),
+            },
+            {
+              id: 'advance-payments',
+              title: 'Prohibition of Unsecured Advance Payments',
+              subtitle: 'Statutory compliance under Central Accounts Manual',
+              children: (
+                <div className="text-xs text-pine/80 space-y-2 leading-relaxed pt-2">
+                  <p>
+                    No advances are released to private contractors without a corresponding irrevocable Bank Guarantee from a scheduled commercial bank covering 110% of the advance sum.
+                  </p>
+                </div>
+              ),
+            },
+          ]}
+        />
+      </div>
+
+      {/* PO AUDIT DETAILS & PRE-CLEARANCE MODAL */}
       {selectedPo && (
         <Modal
           isOpen={Boolean(selectedPo)}
           onClose={() => setSelectedPo(null)}
-          title="Purchase Order Financial Audit"
+          title="Purchase Order Financial & Commercial Audit"
           description={`Comprehensive Line Items Breakdown • ${selectedPo.id}`}
         >
           <div className="flex flex-col gap-4 font-body text-pine mt-2">
@@ -414,18 +486,121 @@ export const POFinancialView: React.FC = () => {
               <div className="flex justify-between text-base font-extrabold text-olive-deep border-t border-sand/40 pt-2 mt-1">
                 <span>Net Audit Payable:</span>
                 <span className="font-mono">
-                  ₹{(calculatePoTotal(selectedPo) * 1.05).toLocaleString('en-IN')}
+                  ₹{Math.round(calculatePoTotal(selectedPo) * 1.05).toLocaleString('en-IN')}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-2 border-t border-sand/40">
+            <div className="flex items-center justify-between gap-2 pt-2 border-t border-sand/40">
+              <Button
+                variant={preClearedPos[selectedPo.id] ? 'outline' : 'primary'}
+                size="sm"
+                onClick={() => {
+                  setPreClearedPos((prev) => ({ ...prev, [selectedPo.id]: true }));
+                  toast({
+                    title: 'PO Pre-Cleared for Payment',
+                    message: `Audit endorsement stamped on ${selectedPo.id}. Ready for treasury voucher generation.`,
+                  });
+                }}
+                icon={<ShieldCheck className="w-3.5 h-3.5" />}
+              >
+                {preClearedPos[selectedPo.id] ? 'Pre-Cleared ✓' : 'Pre-Clear for Disbursement'}
+              </Button>
+
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsPrintModalOpen(true)}
+                  icon={<Printer className="w-3.5 h-3.5" />}
+                >
+                  Print Audit Sheet
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => navigate('/finance/payments')}
+                  icon={<CreditCard className="w-3.5 h-3.5" />}
+                >
+                  Disburse Voucher
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      {/* PRINT COMMERCIAL AUDIT STATEMENT MODAL */}
+      {isPrintModalOpen && selectedPo && (
+        <Modal
+          isOpen={isPrintModalOpen}
+          onClose={() => setIsPrintModalOpen(false)}
+          title="Official Commercial Audit & Settlement Sheet"
+          description={`Central Accounts Division • Audit Voucher #${selectedPo.id}`}
+        >
+          <div className="flex flex-col gap-4 font-body text-pine mt-2">
+            <div className="p-5 rounded-card border-2 border-olive bg-white space-y-4">
+              <div className="flex justify-between items-start border-b-2 border-olive pb-3">
+                <div>
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-olive font-extrabold">
+                    GOVERNMENT OF INDIA • DEFENCE ACCOUNTS / AUDIT DIRECTORATE
+                  </div>
+                  <h4 className="font-heading font-extrabold text-base text-olive-deep">
+                    COMMERCIAL INVOICE PRE-AUDIT &amp; CLEARANCE CERTIFICATE
+                  </h4>
+                  <p className="text-xs text-pine/60 font-mono">
+                    Audit Voucher Ref: AUD-{selectedPo.id.toUpperCase()}-2026
+                  </p>
+                </div>
+                <div className="p-1.5 border border-sand bg-snow rounded text-center shrink-0">
+                  <QrCode className="w-10 h-10 text-olive mx-auto" />
+                  <span className="text-[9px] font-mono text-pine/60 block mt-0.5">AUDIT PASS</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 text-xs bg-snow p-3 rounded font-mono">
+                <div>
+                  <span className="text-[10px] text-pine/60 font-sans uppercase font-bold block">Contractor Agency</span>
+                  <strong className="text-olive-deep text-sm block">{getVendor(selectedPo.vendor_id)?.name}</strong>
+                  <span className="text-pine/70 text-[11px]">GSTIN: {getVendor(selectedPo.vendor_id)?.tax_id}</span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-pine/60 font-sans uppercase font-bold block">Commercial Settlement Sum</span>
+                  <strong className="text-olive-deep text-sm block">₹{Math.round(calculatePoTotal(selectedPo) * 1.05).toLocaleString('en-IN')}</strong>
+                  <span className="text-pine/70 text-[11px]">Payment Mode: RTGS Direct Credit</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-6 pt-4 border-t-2 border-dashed border-sand/60 text-xs">
+                <div className="text-center pt-6 border-t border-pine/30">
+                  <span className="font-heading font-bold text-olive-deep block">Auditor (Commercial Bills)</span>
+                  <span className="text-[10px] text-pine/60 block">Central Accounts Office</span>
+                </div>
+                <div className="text-center pt-6 border-t border-pine/30">
+                  <span className="font-heading font-bold text-olive-deep block">Senior Accounts Officer</span>
+                  <span className="text-[10px] text-pine/60 block">Disbursing Authority</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-2 border-t border-sand/40">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsPrintModalOpen(false)}
+              >
+                Close
+              </Button>
               <Button
                 variant="primary"
                 size="sm"
-                onClick={() => setSelectedPo(null)}
+                onClick={() => {
+                  window.print();
+                  toast({ title: 'Print Audit Sheet', message: 'Audit sheet sent to printer queue.' });
+                }}
+                icon={<Printer className="w-3.5 h-3.5" />}
               >
-                Close Audit
+                Print Commercial Audit Sheet
               </Button>
             </div>
           </div>
