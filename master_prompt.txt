@@ -1,0 +1,54 @@
+<USER_REQUEST>
+use all these, for context and reference-
+@[c:\Users\RIYAN\Desktop\Projects\mess management\stitch_chibi_mess_ration_tracker] @[c:\Users\RIYAN\Desktop\Projects\mess management\animated_svg.html] @[c:\Users\RIYAN\Desktop\Projects\mess management\RMS_Complete_Documentation.pdf] @[c:\Users\RIYAN\Desktop\Projects\mess management\RMS-Ration Management System .pdf] @[c:\Users\RIYAN\Desktop\Projects\mess management\DESIGN.md] 
+
+# MASTER PROMPT: MessMunch, Mess & Ration Management Web App
+
+> Paste everything below the line into your AI builder (Claude Code, Cursor, v0, Lovable, Bolt, Google Stitch, etc.).
+> Attach with it: `PRD.md`, `DESIGN.md`, `code.html` and `screen.png` from your Stitch export.
+> Tip: build in the phases listed in section 12, one phase per message. Do not ask for the whole app in one shot.
+
+---
+
+## 0. ROLE
+
+You are a senior product designer and front-end engineer. Build **MessMunch**, a production-quality, role-based web app for managing ration supply across multiple institutional messes. The attached `PRD.md` is the source of truth for behavior, roles, data and API. The attached `DESIGN.md`, `code.html` and `screen.png` are the source of truth for visual style. If they conflict, the PRD wins on behavior and DESIGN.md wins on looks.
+
+## 1. WHAT THE PRODUCT IS (one paragraph)
+
+A closed feedback loop: **Vendors → Procurement (POs) → Central Store → Distribution to messes → Daily consumption → Demand forecast → next PO.** Stock is never typed in; it is always derived from an append-only `stock_transaction` ledger. Every mutation is written to an immutable audit log. Five roles see five different apps: **Administrator, Store Keeper, Mess Manager, Finance Staff, Vendor (Phase 2, build only a locked "coming soon" shell).**
+
+## 2. VISUAL DIRECTION: "Chibi Kitchen" (follow DESIGN.md exactly)
+
+Cozy anime-kitchen + playful neo-brutalism. Warm, tactile, game-like, but still a serious tool people use daily.
+
+**Tokens (put them in `tailwind.config` and as CSS variabl
+<truncated 14418 bytes>
+assmorphism, soft diffuse shadows, thin 1px borders on cards, or generic blue/purple SaaS styling. It must look like the attached `screen.png`.
+- Do not ship placeholder lorem ipsum. Use realistic mess content throughout.
+
+## 15. DELIVERABLES
+
+Running app (`npm run dev`), `/design-system` page, `tokens.json`, `CREDITS.md`, `README.md` (setup, role demo logins, decisions from §13, how to point at the real API), and a short `DEMO_SCRIPT.md` that walks the full loop: **create PO → receive (partial) → issue to mess → log consumption → view forecast → raise next PO**, showing the audit trail entries produced at each step.
+
+Start with Phase 1 now.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-13T15:02:37+05:30.
+
+The user has mentioned some items in the form @[ITEM]. Here is extra information about the items that were mentioned by the user, in the order that they appear:
+
+@[c:\Users\RIYAN\Desktop\Projects\mess management\stitch_chibi_mess_ration_tracker] is a [File]:
+c:\Users\RIYAN\Desktop\Projects\mess management\stitch_chibi_mess_ration_tracker
+@[c:\Users\RIYAN\Desktop\Projects\mess management\animated_svg.html] is a [File]:
+c:\Users\RIYAN\Desktop\Projects\mess management\animated_svg.html
+@[c:\Users\RIYAN\Desktop\Projects\mess management\RMS_Complete_Documentation.pdf] is a [File]:
+c:\Users\RIYAN\Desktop\Projects\mess management\RMS_Complete_Documentation.pdf
+@[c:\Users\RIYAN\Desktop\Projects\mess management\RMS-Ration Management System .pdf] is a [File]:
+c:\Users\RIYAN\Desktop\Projects\mess management\RMS-Ration Management System .pdf
+@[c:\Users\RIYAN\Desktop\Projects\mess management\DESIGN.md] is a [File]:
+c:\Users\RIYAN\Desktop\Projects\mess management\DESIGN.md
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from None to Gemini 3.8 Flash (High). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>

@@ -1,0 +1,55 @@
+## 12. BUILD ORDER (do ONE phase, then stop and show me)
+
+1. **Foundation:** project setup, tokens, Tailwind config, fonts, `/design-system` page with all components and states, app shell, login + role routing, MSW + typed API client.
+2. **Mess Manager** flow (smallest role, proves the system): today's entry, my stock, history.
+3. **Store Keeper:** dashboard, receive wizard, issue, adjustments, ledger.
+4. **Admin:** dashboard, vendors, items, users, messes.
+5. **Finance:** budgets, payments, PO financial view, audit log.
+6. **Forecast + alerts + CSV export**, then polish: motion pass, mascot states, a11y audit, README.
+
+After each phase: list what you built, what is mocked, and any PRD ambiguity you resolved (see §13).
+
+## 13. AMBIGUITIES: DECIDE AND FLAG, DON'T BLOCK
+
+Use these defaults and list them in the README so I can change them:
+- Mess consumption above on-hand stock → **blocked** with an explicit, audited manager override request.
+- Expiry tracked **per item** (shelf life + receipt date), with the data model ready for per-batch later.
+- Messes order only via the central store.
+- Budgets creatable by Finance and Admin.
+- No PO approval step.
+- One Mess Manager per mess (UI tolerates several).
+
+## 14. DO NOT
+
+- Do not build a student-facing portal. The Stitch screen includes RSVP/opt-out, calorie meter, chef roster, WhatsApp install banner and community polls. These are **out of scope** for the MVP. Reuse only the visual language, the pantry jars, the meal board (as the optional Menu feature) and the corkboard idea (as an Announcements widget on the Admin dashboard).
+- Do not store current stock as an editable field anywhere in UI state.
+- Do not rely on UI hiding for security; guards are UX, the (mock) API enforces roles.
+- Do not use stock photos of people or copy existing characters, logos or artwork.
+- Do not use gradients, glassmorphism, soft diffuse shadows, thin 1px borders on cards, or generic blue/purple SaaS styling. It must look like the attached `screen.png`.
+- Do not ship placeholder lorem ipsum. Use realistic mess content throughout.
+
+## 15. DELIVERABLES
+
+Running app (`npm run dev`), `/design-system` page, `tokens.json`, `CREDITS.md`, `README.md` (setup, role demo logins, decisions from §13, how to point at the real API), and a short `DEMO_SCRIPT.md` that walks the full loop: **create PO → receive (partial) → issue to mess → log consumption → view forecast → raise next PO**, showing the audit trail entries produced at each step.
+
+Start with Phase 1 now.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-13T15:02:37+05:30.
+
+The user has mentioned some items in the form @[ITEM]. Here is extra information about the items that were mentioned by the user, in the order that they appear:
+
+@[c:\Users\RIYAN\Desktop\Projects\mess management\stitch_chibi_mess_ration_tracker] is a [File]:
+c:\Users\RIYAN\Desktop\Projects\mess management\stitch_chibi_mess_ration_tracker
+@[c:\Users\RIYAN\Desktop\Projects\mess management\animated_svg.html] is a [File]:
+c:\Users\RIYAN\Desktop\Projects\mess management\animated_svg.html
+@[c:\Users\RIYAN\Desktop\Projects\mess management\RMS_Complete_Documentation.pdf] is a [File]:
+c:\Users\RIYAN\Desktop\Projects\mess management\RMS_Complete_Documentation.pdf
+@[c:\Users\RIYAN\Desktop\Projects\mess management\RMS-Ration Management System .pdf] is a [File]:
+c:\Users\RIYAN\Desktop\Projects\mess management\RMS-Ration Management System .pdf
+@[c:\Users\RIYAN\Desktop\Projects\mess management\DESIGN.md] is a [File]:
+c:\Users\RIYAN\Desktop\Projects\mess management\DESIGN.md
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from None to Gemini 3.8 Flash (High). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>

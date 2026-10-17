@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700;800&amp;family=Plus+Jakarta+Sans:wght@500;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-secondary-fixed-variant":"#8c1900","secondary-fixed":"#ffdad2","on-tertiary":"#ffffff","inverse-primary":"#f5bf31","on-tertiary-container":"#006731","on-tertiary-fixed-variant":"#005226","primary-fixed-dim":"#f5bf31","on-error":"#ffffff","primary-container":"#ffc83b","surface-bright":"#fbf9f4","on-secondary-fixed":"#3d0600","surface-container":"#efeee9","on-tertiary-fixed":"#00210b","on-error-container":"#93000a","primary":"#785a00","on-surface":"#1b1c19","outline-variant":"#d2c5ad","tertiary-fixed-dim":"#71dc8d","error":"#ba1a1a","on-primary":"#ffffff","surface-container-highest":"#e4e2de","on-secondary-container":"#570c00","secondary-fixed-dim":"#ffb4a3","secondary":"#b52603","on-primary-container":"#715400","surface-tint":"#785a00","outline":"#817661","tertiary-container":"#7ae696","primary-fixed":"#ffdf9b","on-primary-fixed":"#251a00","surface-variant":"#e4e2de","surface-container-high":"#eae8e3","background":"#fbf9f4","on-surface-variant":"#4f4634","inverse-surface":"#30312e","error-container":"#ffdad6","surface-container-lowest":"#ffffff","on-background":"#1b1c19","surface-dim":"#dbdad5","secondary-container":"#fd5835","tertiary":"#006d34","tertiary-fixed":"#8df9a7","on-secondary":"#ffffff","surface":"#fbf9f4","on-primary-fixed-variant":"#5b4300","surface-container-low":"#f5f3ee","inverse-on-surface":"#f2f1ec"},borderRadius:{DEFAULT:"1rem",lg:"2rem",xl:"3rem",full:"9999px"},spacing:{"gutter-desktop":"1.5rem","space-xl":"2.5rem","space-lg":"1.5rem","gutter-tablet":"1.25rem","space-md":"1rem","space-sm":"0.5rem","space-xs":"0.25rem","margin-tablet":"2rem","margin-desktop":"3rem",gutter:"1rem",margin:"1rem"},fontFamily:{"label-sm":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"headline-lg-mobile":["Epilogue"],"body-md":["Plus Jakarta Sans"],"display-lg":["Epilogue"],"label-lg":["Plus Jakarta Sans"],"headline-md":["Epilogue"],"display-lg-mobile":["Epilogue"],"title-md":["Plus Jakarta Sans"],"title-lg":["Plus Jakarta Sans"],"headline-lg":["Epilogue"],"headline-sm":["Epilogue"],"label-md":["Plus Jakarta Sans"]},fontSize:{"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.05em",fontWeight:"700"}],"body-lg":["18px",{lineHeight:"28px",fontWeight:"500"}],"body-sm":["13px",{lineHeight:"18px",fontWeight:"500"}],"headline-lg-mobile":["26px",{lineHeight:"34px",letterSpacing:"0em",fontWeight:"700"}],"body-md":["15px",{lineHeight:"22px",fontWeight:"500"}],"display-lg":["48px",{lineHeight:"56px",letterSpacing:"-0.02em",fontWeight:"800"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.02em",fontWeight:"700"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"700"}],"display-lg-mobile":["34px",{lineHeight:"42px",letterSpacing:"-0.01em",fontWeight:"800"}],"title-md":["16px",{lineHeight:"24px",fontWeight:"700"}],"title-lg":["18px",{lineHeight:"26px",fontWeight:"700"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.01em",fontWeight:"700"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.04em",fontWeight:"700"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased min-h-screen flex flex-col"><header class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 w-full px-gutter-desktop max-w-[1280px] mx-auto flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-sm group" data-path="daily-menu" href="#"><img alt="MessMunch Mascot Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCD7Qc6Y0C087QVQdWl-Ym7GXq8j4tWNLnrJxdMe_sMYWmgYipTaMIErU0i11uOCjJI4cJNZROQU1vWv0XnWU53NQXmIzgVMMzlXfp5Is5fBzOmhK4OzPV9UmO-8upca5SYo3LOzaCST6dqsDKLC3oFSr7rVFRvKUjv2fi9HKwp1c5Jc8gTMJC3RwGJRRI6KpwTGUSbK-16EdldwlM4-OO6dn59wmB8qsPdyuqmHllgZ7H8k8vLlcE"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight tracking-tight">MessMunch</span><span class="font-label-sm text-label-sm text-secondary font-bold -mt-0.5 tracking-wide">Smart Mess &amp; Ration</span></div></a><nav class="hidden xl:flex items-center gap-space-xs p-space-xs bg-surface-container-low rounded-full" data-active-classes="bg-primary-container text-on-primary-container rounded-full"><a aria-current="page" class="px-space-md py-space-xs font-label-lg transition-all bg-primary-container text-on-primary-container rounded-full" data-path="daily-menu" href="#">Daily Menu</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="ration-pantry" href="#">Ration Pantry</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="meal-planning" href="#">Meal Planning</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="distribution-counter" href="#">Distribution Counter</a><a class="px-space-md py-space-xs rounded-full font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="reports" href="#">Reports</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center gap-space-xs bg-surface-container-high px-space-md py-space-xs rounded-full"><span class="font-body-sm text-body-sm text-on-surface font-bold">🍳 Lunch Prep in Progress (12:30 PM)</span></div><button aria-label="Notifications" class="relative p-space-xs rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors flex items-center justify-center" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-secondary ring-2 ring-surface"></span></button><div class="flex items-center gap-space-sm bg-surface-container-low px-space-sm py-1.5 rounded-full"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden sm:flex flex-col pr-space-xs"><span class="font-label-md text-label-md text-on-surface leading-tight">Chef Gopal</span><span class="font-label-sm text-label-sm text-on-surface-variant">Head Cook</span></div></div></div></div></header><main class="w-full pt-20 bg-background flex-1"><div class="flex flex-col w-full">
+<!-- Top Ticker Bar -->
+<div class="w-full bg-primary-container text-on-primary-container px-margin-desktop py-space-xs flex items-center justify-between overflow-hidden shadow-sm">
+<div class="flex items-center gap-space-md animate-pulse">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">soup_kitchen</span>
+<span class="font-label-md text-label-md tracking-wider uppercase">Mess Shift Alert: Lunch Dumpling &amp; Dal Simmering on Stove 4</span>
+</div>
+<div class="hidden md:flex items-center gap-space-lg font-label-sm text-label-sm">
+<span class="flex items-center gap-space-xs"><span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span> Kitchen Inspection: Grade A+</span>
+<span class="flex items-center gap-space-xs"><span class="w-2.5 h-2.5 rounded-full bg-secondary-container"></span> Compost Log: 100% Diverted</span>
+</div>
+</div>
+<div class="max-w-[1280px] w-full mx-auto px-gutter md:px-margin-tablet lg:px-margin-desktop py-space-lg flex flex-col gap-space-xl">
+<!-- Hero Section -->
+<section class="relative w-full rounded-lg bg-surface-container-lowest p-space-lg md:p-space-xl shadow-xl overflow-hidden flex flex-col lg:flex-row items-center gap-space-xl">
+<!-- Background Cozy Glow Orbs -->
+<div class="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-primary-container/20 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-secondary-container/15 blur-3xl pointer-events-none"></div>
+<!-- Textual Hero Column -->
+<div class="w-full lg:w-7/12 flex flex-col items-start gap-space-md z-10">
+<!-- Badge -->
+<div class="inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-primary-fixed text-on-primary-fixed shadow-sm">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">arrow_back_ios_new</span>
+<span class="font-label-sm text-label-sm tracking-wide uppercase">Community Kitchen AI v2.4</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight leading-tight">
+          Wholesome Mess Meals, <br class="hidden sm:inline"/>
+<span class="relative inline-block text-secondary">
+            Zero Ration Waste!
+            <svg class="absolute -bottom-2 left-0 w-full h-3 text-primary-container" fill="none" preserveaspectratio="none" viewbox="0 0 260 12">
+<path d="M3 9C60 2.5 180 2.5 257 9" stroke="currentColor" stroke-linecap="round" stroke-width="6"></path>
+</svg>
+</span>
+          🍲
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+          Serving <strong class="text-on-surface font-bold">420 hungry campus residents</strong> daily with automated batch planning, automated grain silos, and precise live meal opt-outs.
+        </p>
+<!-- Live Metric Badges -->
+<div class="flex flex-wrap items-center gap-space-sm pt-space-xs">
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-high shadow-sm text-on-surface">
+<span class="material-symbols-outlined text-tertiary text-[18px]" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span class="font-label-sm text-label-sm">Today's RSVP: <strong class="text-tertiary">388 / 420</strong></span>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-high shadow-sm text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label-sm text-label-sm">Grain Reserves: <strong class="text-primary">14 Days Safe</strong></span>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-secondary-fixed text-on-secondary-fixed shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[18px]">trending_down</span>
+<span class="font-label-sm text-label-sm">Surplus Waste Cut: <strong class="text-secondary">-32%</strong></span>
+</div>
+</div>
+<!-- Call to Actions -->
+<div class="flex flex-wrap items-center gap-space-md pt-space-md">
+<a class="group relative inline-flex items-center gap-space-sm px-space-lg py-3.5 rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1 active:translate-y-0.5" href="#chalkboard-menu">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+<span>View Chalkboard Menu</span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+<a class="inline-flex items-center gap-space-sm px-space-lg py-3.5 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-lg text-label-lg shadow-sm hover:shadow-md transition-all duration-200" href="#pantry-jars">
+<span class="material-symbols-outlined text-primary text-[20px]">warehouse</span>
+<span>Check Pantry Supplies</span>
+</a>
+</div>
+</div>
+<!-- Mascot & Interactive Graphic Column -->
+<div class="w-full lg:w-5/12 flex flex-col items-center justify-center relative min-h-[380px]">
+<!-- Mascot Asset Container -->
+<div class="relative w-full flex items-center justify-center">
+<!-- STITCH_SVG_START:ANIMATION_2 class="w-full max-w-lg h-96 mx-auto drop-shadow-md" --><div class="w-full max-w-lg h-96 mx-auto drop-shadow-md" id="animated-svg-ANIMATION_2" style="display:block;"><svg height="100%" viewbox="0 0 600 480" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="potGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#FF6B4A"></stop>
+<stop offset="100%" stop-color="#E24320"></stop>
+</lineargradient>
+<lineargradient id="soupGrad" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#FFE066"></stop>
+<stop offset="100%" stop-color="#FFA826"></stop>
+</lineargradient>
+<lineargradient id="shadowGrad" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#3D2012" stop-opacity="0.15"></stop>
+<stop offset="100%" stop-color="#3D2012" stop-opacity="0.0"></stop>
+</lineargradient>
+<filter height="140%" id="glow" width="140%" x="-20%" y="-20%">
+<fegaussianblur result="blur" stddeviation="6"></fegaussianblur>
+<fecomposite in="SourceGraphic" in2="blur" operator="over"></fecomposite>
+</filter>
+</defs>
+<style>
+    @keyframes floatSoft {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(0.8deg); }
+    }
+    @keyframes steamRise1 {
+      0% { opacity: 0; transform: translate(0, 10px) scale(0.7); }
+      40% { opacity: 0.8; }
+      80% { opacity: 0.6; transform: translate(-12px, -45px) scale(1.15); }
+      100% { opacity: 0; transform: translate(-20px, -70px) scale(1.3); }
+    }
+    @keyframes steamRise2 {
+      0% { opacity: 0; transform: translate(0, 8px) scale(0.6); }
+      50% { opacity: 0.9; }
+      100% { opacity: 0; transform: translate(15px, -65px) scale(1.25); }
+    }
+    @keyframes steamRise3 {
+      0% { opacity: 0; transform: translate(0, 10px) scale(0.7); }
+      45% { opacity: 0.85; }
+      100% { opacity: 0; transform: translate(4px, -60px) scale(1.2); }
+    }
+    @keyframes bubblePop1 {
+      0%, 100% { transform: scale(0.9); }
+      50% { transform: scale(1.25) translateY(-3px); }
+    }
+    @keyframes bubblePop2 {
+      0%, 100% { transform: scale(1.2); }
+      50% { transform: scale(0.8) translateY(2px); }
+    }
+    @keyframes spoonStir {
+      0%, 100% { transform: rotate(18deg) translate(0, 0); }
+      50% { transform: rotate(26deg) translate(-3px, -4px); }
+    }
+    @keyframes eyeBlink {
+      0%, 94%, 98%, 100% { transform: scaleY(1); }
+      96% { transform: scaleY(0.1); }
+    }
+    @keyframes carrotBounce {
+      0%, 100% { transform: translateY(0) rotate(0); }
+      50% { transform: translateY(-6px) rotate(8deg); }
+    }
+    @keyframes sparkleGlint {
+      0%, 100% { opacity: 0.3; transform: scale(0.7); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .pot-group { animation: floatSoft 4s ease-in-out infinite; transform-origin: center bottom; }
+    .steam-1 { animation: steamRise1 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+    .steam-2 { animation: steamRise2 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite 1.1s; }
+    .steam-3 { animation: steamRise3 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite 2s; }
+    .bubble-1 { animation: bubblePop1 1.8s ease-in-out infinite; transform-origin: 260px 240px; }
+    .bubble-2 { animation: bubblePop2 2.2s ease-in-out infinite 0.6s; transform-origin: 320px 250px; }
+    .bubble-3 { animation: bubblePop1 2s ease-in-out infinite 1.2s; transform-origin: 370px 245px; }
+    .spoon { animation: spoonStir 3.5s ease-in-out infinite; transform-origin: 390px 230px; }
+    .mascot-eye { animation: eyeBlink 5s infinite; transform-origin: 300px 320px; }
+    .carrot-float { animation: carrotBounce 3s ease-in-out infinite; }
+    .sparkle { animation: sparkleGlint 2.4s ease-in-out infinite; }
+  </style>
+<!-- Ground Shadow -->
+<ellipse cx="300" cy="435" fill="#E8DEC8" opacity="0.8" rx="190" ry="24"></ellipse>
+<ellipse cx="300" cy="433" fill="#D9CBB0" opacity="0.6" rx="140" ry="16"></ellipse>
+<!-- Steam Clouds Rising -->
+<g class="steam-1" opacity="0">
+<path d="M260,200 C240,160 270,140 250,110 C235,90 260,70 245,45" fill="none" opacity="0.75" stroke="#FFF7E6" stroke-linecap="round" stroke-linejoin="round" stroke-width="14"></path>
+<path d="M260,200 C240,160 270,140 250,110 C235,90 260,70 245,45" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></path>
+</g>
+<g class="steam-2" opacity="0">
+<path d="M330,195 C355,160 325,130 350,100 C368,80 340,60 355,35" fill="none" opacity="0.75" stroke="#FFF7E6" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></path>
+<path d="M330,195 C355,160 325,130 350,100 C368,80 340,60 355,35" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="9"></path>
+</g>
+<g class="steam-3" opacity="0">
+<path d="M295,190 C310,150 285,125 305,95 C315,80 295,55 310,30" fill="none" opacity="0.7" stroke="#FFF7E6" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"></path>
+<path d="M295,190 C310,150 285,125 305,95 C315,80 295,55 310,30" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"></path>
+</g>
+<!-- Sparkles -->
+<g class="sparkle" style="transform-origin: 150px 140px; animation-delay: 0.3s;">
+<path d="M150,120 Q150,140 130,140 Q150,140 150,160 Q150,140 170,140 Q150,140 150,120" fill="#FFC83B"></path>
+</g>
+<g class="sparkle" style="transform-origin: 470px 160px; animation-delay: 1.2s;">
+<path d="M470,145 Q470,160 455,160 Q470,160 470,175 Q470,160 485,160 Q470,160 470,145" fill="#4EBA6F"></path>
+</g>
+<g class="sparkle" style="transform-origin: 430px 90px; animation-delay: 1.8s;">
+<path d="M430,80 Q430,90 420,90 Q430,90 430,100 Q430,90 440,90 Q430,90 430,80" fill="#FF8D3B"></path>
+</g>
+<!-- MAIN POT MASCOT GROUP -->
+<g class="pot-group">
+<!-- Back Wooden Spoon -->
+<g class="spoon">
+<rect fill="#BA7944" height="150" rx="10" stroke="#4A2A14" stroke-width="4" width="22" x="382" y="100"></rect>
+<ellipse cx="393" cy="90" fill="#CD8A50" rx="26" ry="34" stroke="#4A2A14" stroke-width="4"></ellipse>
+<ellipse cx="393" cy="90" fill="#A86835" rx="18" ry="24"></ellipse>
+</g>
+<!-- Pot Back Rim -->
+<ellipse cx="300" cy="230" fill="#BA3216" rx="150" ry="32" stroke="#3D1808" stroke-width="6"></ellipse>
+<!-- Rich Broth Soup -->
+<ellipse cx="300" cy="235" fill="url(#soupGrad)" rx="142" ry="28"></ellipse>
+<!-- Soup Ripples & Bubbles -->
+<g class="bubble-1">
+<circle cx="260" cy="240" fill="#FFEDB3" r="14" stroke="#D98200" stroke-width="3"></circle>
+<circle cx="257" cy="236" fill="#FFFFFF" r="4"></circle>
+</g>
+<g class="bubble-2">
+<circle cx="325" cy="248" fill="#FFEDB3" r="18" stroke="#D98200" stroke-width="3"></circle>
+<circle cx="320" cy="243" fill="#FFFFFF" r="5"></circle>
+</g>
+<g class="bubble-3">
+<circle cx="375" cy="242" fill="#FFEDB3" r="11" stroke="#D98200" stroke-width="3"></circle>
+<circle cx="373" cy="239" fill="#FFFFFF" r="3"></circle>
+</g>
+<!-- Floating Ingredients in Pot -->
+<!-- Carrot Slice -->
+<g class="carrot-float" style="transform-origin: 220px 240px;">
+<ellipse cx="220" cy="238" fill="#FF7A18" rx="16" ry="11" stroke="#3D1808" stroke-width="3" transform="rotate(-15 220 238)"></ellipse>
+<circle cx="220" cy="238" fill="#FF9E4A" r="5"></circle>
+</g>
+<!-- Herb Green Leaf -->
+<path d="M355,232 C368,225 380,230 384,238 C375,242 360,240 355,232 Z" fill="#4EBA6F" stroke="#235431" stroke-width="3"></path>
+<!-- Pot Handles Left & Right -->
+<path d="M145,265 C105,265 100,310 145,315" fill="#E24320" stroke="#3D1808" stroke-linecap="round" stroke-width="7"></path>
+<path d="M455,265 C495,265 500,310 455,315" fill="#E24320" stroke="#3D1808" stroke-linecap="round" stroke-width="7"></path>
+<!-- Main Pot Body -->
+<path d="M150,240 C145,340 180,410 300,410 C420,410 455,340 450,240 Z" fill="url(#potGrad)" stroke="#3D1808" stroke-width="7"></path>
+<!-- Pot Specular / Cute Highlight -->
+<path d="M175,265 C165,335 190,380 235,395" fill="none" stroke="#FFA28A" stroke-linecap="round" stroke-width="8"></path>
+<!-- Chef Mascot Face on the Pot -->
+<g class="mascot-eye">
+<!-- Left Eye: Happy Arc -->
+<path d="M245,315 Q260,300 275,315" fill="none" stroke="#3D1808" stroke-linecap="round" stroke-width="6"></path>
+<!-- Right Eye: Happy Arc -->
+<path d="M325,315 Q340,300 355,315" fill="none" stroke="#3D1808" stroke-linecap="round" stroke-width="6"></path>
+</g>
+<!-- Cheerful Blushing Cheeks -->
+<ellipse cx="235" cy="330" fill="#FF9E8A" opacity="0.85" rx="14" ry="8"></ellipse>
+<ellipse cx="365" cy="330" fill="#FF9E8A" opacity="0.85" rx="14" ry="8"></ellipse>
+<!-- Open Happy Mouth with Tongue -->
+<path d="M285,325 Q300,355 315,325 Z" fill="#B3241C" stroke="#3D1808" stroke-width="4"></path>
+<path d="M292,336 Q300,350 308,336 Z" fill="#FF8D85"></path>
+<!-- Tiny Cute Chef Necktie / Bandana -->
+<polygon fill="#FFE58F" points="300,375 285,395 315,395" stroke="#3D1808" stroke-width="3"></polygon>
+<circle cx="300" cy="375" fill="#FFC83B" r="7" stroke="#3D1808" stroke-width="3"></circle>
+</g>
+<!-- Floating Cute Ration Badges -->
+<g class="carrot-float" style="transform-origin: 110px 220px; animation-delay: 0.8s;">
+<!-- Bag of Rice / Grain Tag -->
+<rect fill="#FFFBF2" height="75" rx="16" stroke="#3D1808" stroke-width="4" width="70" x="75" y="195"></rect>
+<path d="M85,195 Q110,180 135,195" fill="#FFFBF2" stroke="#3D1808" stroke-width="4"></path>
+<ellipse cx="110" cy="235" fill="#FFE28A" rx="22" ry="16"></ellipse>
+<text fill="#5C3A21" font-family="'Epilogue', sans-serif" font-size="14" font-weight="900" text-anchor="middle" x="110" y="240">RICE</text>
+<circle cx="110" cy="205" fill="#FF5A36" r="4"></circle>
+</g>
+<g class="carrot-float" style="transform-origin: 480px 240px; animation-delay: 1.5s;">
+<!-- Spice / Veggie Badge -->
+<rect fill="#4EBA6F" height="75" rx="20" stroke="#3D1808" stroke-width="4" width="75" x="450" y="215"></rect>
+<circle cx="488" cy="245" fill="#FFFFFF" r="18"></circle>
+<text fill="#2E7D32" font-family="'Epilogue', sans-serif" font-size="14" font-weight="900" text-anchor="middle" x="488" y="250">98%</text>
+<text fill="#FFFFFF" font-family="'Epilogue', sans-serif" font-size="10" font-weight="800" text-anchor="middle" x="488" y="278">FRESH</text>
+</g>
+</svg></div><!-- STITCH_SVG_END:ANIMATION_2 -->
+<!-- Floating Cozy Tags -->
+<div class="absolute -top-3 left-4 md:left-8 bg-surface-container-lowest px-space-md py-space-xs rounded-full shadow-lg flex items-center gap-space-xs animate-bounce" style="animation-duration: 3.5s;">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span class="font-label-sm text-label-sm text-on-surface">100% Nutritious Meal Plan</span>
+</div>
+<div class="absolute top-1/2 -right-2 md:-right-6 bg-surface-container-lowest px-space-md py-space-xs rounded-full shadow-lg flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">mode_heat</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">Live Steam Alert</span>
+</div>
+<div class="absolute bottom-4 left-6 md:left-12 bg-primary-fixed text-on-primary-fixed px-space-md py-space-xs rounded-full shadow-md flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px]">local_florist</span>
+<span class="font-label-sm text-label-sm font-bold">Fresh Farm Spices</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Meal Token Quick-Actions & RSVP Bar -->
+<section class="w-full bg-surface-container-high rounded-lg p-space-md md:p-space-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[26px]">confirmation_number</span>
+</div>
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface">Are you eating at the mess hall today?</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Marking your attendance in advance saves 350 grams of food waste per student.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm w-full md:w-auto shrink-0 justify-end">
+<button class="flex-1 md:flex-initial px-space-lg py-2.5 rounded-full bg-tertiary text-on-tertiary font-label-md text-label-md shadow-sm hover:shadow transition-all flex items-center justify-center gap-space-xs" id="btn-token-optin" onclick="toggleMealToken(true)">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span>I'm Eating (Token Active)</span>
+</button>
+<button class="flex-1 md:flex-initial px-space-lg py-2.5 rounded-full bg-surface-container-lowest text-secondary font-label-md text-label-md hover:bg-error-container hover:text-on-error-container shadow-sm transition-all flex items-center justify-center gap-space-xs" id="btn-token-optout" onclick="toggleMealToken(false)">
+<span class="material-symbols-outlined text-[18px]">event_busy</span>
+<span>Opt-Out / On Leave</span>
+</button>
+</div>
+</section>
+<!-- Today's Chalkboard Meal Timeline -->
+<section class="w-full flex flex-col gap-space-lg" id="chalkboard-menu">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm">
+<div>
+<div class="inline-flex items-center gap-space-xs font-label-sm text-label-sm text-primary uppercase tracking-wider mb-1">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+<span>Daily Kitchen Slate</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Today's Meal Board &amp; Live Readiness</h2>
+</div>
+<div class="flex items-center gap-space-sm font-label-md text-label-md text-on-surface-variant bg-surface-container-low px-space-md py-1.5 rounded-full self-start md:self-auto">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-ping"></span>
+<span>Kitchen Clocks: Lunch Dispatch at 12:30 PM Sharp</span>
+</div>
+</div>
+<!-- Bento Slate Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Breakfast Slate (Completed) -->
+<div class="relative bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">wb_twilight</span>
+<span class="font-title-md text-title-md text-on-surface">Breakfast</span>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">8:00 AM • Served</span>
+</div>
+<div class="py-space-sm flex flex-col gap-space-xs">
+<div class="font-title-lg text-title-lg text-on-surface">Idli, Sambar &amp; Coconut Dip</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Steamed rice cakes, spiced lentil broth, coconut herb chutney, accompanied by hot Masala Chai.</p>
+</div>
+<div class="pt-space-md mt-space-sm bg-surface-container-high/60 rounded-DEFAULT p-space-sm flex flex-col gap-space-xs">
+<div class="flex justify-between items-center font-label-sm text-label-sm text-on-surface-variant">
+<span>Served to Hungry bellies</span>
+<strong class="text-on-surface">360 Plates</strong>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 100%;"></div>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]">task_alt</span> Clean plate audit: 99.1%
+            </span>
+</div>
+</div>
+<!-- Lunch Slate (Live In-Progress) -->
+<div class="relative bg-surface-container-lowest rounded-lg p-space-md flex flex-col justify-between shadow-lg ring-4 ring-primary-container/40">
+<div class="absolute -top-3 right-4 px-space-sm py-0.5 rounded-full bg-secondary-container text-on-secondary font-label-sm text-label-sm shadow-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+<span>COOKING RIGHT NOW</span>
+</div>
+<div>
+<div class="flex items-center justify-between pb-space-sm mt-1">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[22px]">wb_sunny</span>
+<span class="font-title-md text-title-md text-on-surface">Midday Lunch</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">12:30 PM</span>
+</div>
+<div class="py-space-sm flex flex-col gap-space-xs">
+<div class="font-title-lg text-title-lg text-on-surface">Jeera Rice &amp; Paneer Butter Tadka</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Slow-simmered Yellow Dal Tadka, Clay-oven Roti, garden cucumber relish, with curd cups.</p>
+</div>
+<!-- Recipe Highlight Pill -->
+<div class="flex flex-wrap gap-1.5 py-space-xs">
+<span class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">High Protein</span>
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm">Nut-Free Kitchen</span>
+</div>
+</div>
+<div class="pt-space-md mt-space-sm bg-surface-container-low rounded-DEFAULT p-space-sm flex flex-col gap-space-xs">
+<div class="flex justify-between items-center font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Batch Cooking Progress</span>
+<strong class="text-secondary font-bold">78% Cooked</strong>
+</div>
+<div class="w-full bg-surface-container-high h-2.5 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full transition-all duration-500" style="width: 78%;"></div>
+</div>
+<div class="flex justify-between items-center font-label-sm text-label-sm text-on-surface-variant mt-1">
+<span>Attending: <strong>395 students</strong></span>
+<span class="text-primary font-bold">15 min to whistle</span>
+</div>
+</div>
+</div>
+<!-- Evening Snack Slate (Upcoming) -->
+<div class="relative bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">bakery_dining</span>
+<span class="font-title-md text-title-md text-on-surface">Evening Refresh</span>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">5:00 PM</span>
+</div>
+<div class="py-space-sm flex flex-col gap-space-xs">
+<div class="font-title-lg text-title-lg text-on-surface">Crispy Potato Samosa &amp; Chai</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Fresh mint cilantro dip, sweet tamarind relish, paired with freshly brewed Ginger Adrak tea.</p>
+</div>
+<div class="pt-space-md mt-space-sm bg-surface-container-high/60 rounded-DEFAULT p-space-sm flex flex-col gap-space-xs">
+<div class="flex justify-between items-center font-label-sm text-label-sm text-on-surface-variant">
+<span>Snack RSVPs Registered</span>
+<strong class="text-on-surface">310 Pickups</strong>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 74%;"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span> Frying begins at 4:30 PM
+            </span>
+</div>
+</div>
+<!-- Dinner Slate (Upcoming Feast) -->
+<div class="relative bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">nightlight</span>
+<span class="font-title-md text-title-md text-on-surface">Night Dinner</span>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">8:00 PM</span>
+</div>
+<div class="py-space-sm flex flex-col gap-space-xs">
+<div class="font-title-lg text-title-lg text-on-surface">Veg Pulao, Rajma &amp; Gulab Jamun</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Kashmiri Rajma simmered overnight, whole spice saffron rice, cucumber boondi raita, warm dessert.</p>
+</div>
+<div class="pt-space-md mt-space-sm bg-surface-container-high/60 rounded-DEFAULT p-space-sm flex flex-col gap-space-xs">
+<div class="flex justify-between items-center font-label-sm text-label-sm text-on-surface-variant">
+<span>Expected Residents</span>
+<strong class="text-on-surface">380 Diners</strong>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 90%;"></div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]">star</span> Special Dessert Night
+            </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Visual Divider & Kitchen Scene Photo Card -->
+<section class="w-full grid grid-cols-1 md:grid-cols-3 gap-space-md items-center">
+<div class="col-span-1 md:col-span-2 relative h-64 md:h-72 rounded-lg overflow-hidden shadow-lg group">
+<div class="bg-cover bg-center w-full h-full transform group-hover:scale-105 transition-transform duration-700" data-alt="A warm, bright, cozy anime-inspired kitchen with copper pots steaming on stoves, wooden pantry shelves stacked with earthen jars of pulses and rice, morning sunlight filtering through kitchen windows onto fresh mint and cilantro, welcoming Ghibli-esque culinary atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtYoU7sDBIHYKaiztfPfrhDCDlZ-vx95r6vX-YHJdc8kSuFsIRr74ShApHnQ7h-d7N1z8XgvR3PCRqwCMxGtqnmBK9irRInqrSbMGROGsNLcUwrmElmMc_Zi8v-sYbEs0DDV1Vxh9CaUngFwa1aSJUD3kO0L4VNrAICoC5FYrdigIuYpZajdRPMe59DVTe6c4Nz4yaGHO7qE6OX6yQ-RjbhVnDNVg0JxsiFr5a-C5PAvWzignPMd4')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/90 via-on-surface/40 to-transparent flex flex-col justify-end p-space-lg text-surface-container-lowest">
+<span class="font-label-sm text-label-sm tracking-widest uppercase text-primary-container">Kitchen Hearth Cam 01</span>
+<h3 class="font-headline-md text-headline-md font-bold">Hand-ground spices &amp; zero artificial preservatives</h3>
+<p class="font-body-sm text-body-sm text-surface-container-high opacity-90 max-w-lg">Every meal cooked at MessMunch starts from scratch each morning with verified farm produce.</p>
+</div>
+</div>
+<div class="col-span-1 bg-surface-container-low rounded-lg p-space-lg shadow-md flex flex-col justify-between h-full">
+<div class="flex flex-col gap-space-xs">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-[22px]">health_and_safety</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface">Nutrition Calorie Meter</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Daily student dietary guidelines balanced by mess dietitian Dr. Archana.</p>
+</div>
+<div class="space-y-space-xs py-space-sm">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Calories Target</span>
+<span class="text-on-surface font-bold">2,180 / 2,250 kcal</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 92%;"></div>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm pt-1">
+<span class="text-on-surface-variant">Protein Fulfillment</span>
+<span class="text-on-surface font-bold">74g / 70g</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<div class="pt-space-xs">
+<button class="w-full py-2 rounded-full bg-surface-container-highest hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors text-center">
+            Download Nutrient Breakdown Sheet (PDF)
+          </button>
+</div>
+</div>
+</section>
+<!-- Pantry Ration Quick-Pulse & Storage Jars -->
+<section class="w-full flex flex-col gap-space-lg" id="pantry-jars">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm">
+<div>
+<div class="inline-flex items-center gap-space-xs font-label-sm text-label-sm text-primary uppercase tracking-wider mb-1">
+<span class="material-symbols-outlined text-[16px]">kitchen</span>
+<span>Real-time Silo Inventory</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Pantry Storage Jars &amp; Grain Reserves</h2>
+</div>
+<button class="inline-flex items-center gap-space-xs px-space-lg py-3 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0" onclick="simulateOrderModal()">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+<span>1-Click Generate Ration Order</span>
+</button>
+</div>
+<!-- Jars Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Jar 1: Basmati Rice -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-md flex flex-col items-center text-center relative group hover:-translate-y-1 transition-transform duration-300">
+<div class="w-full flex justify-between items-center text-on-surface-variant pb-space-xs">
+<span class="font-label-sm text-label-sm bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 rounded-full">Healthy Stock</span>
+<span class="material-symbols-outlined text-[18px]">grain</span>
+</div>
+<!-- Glass Jar Visual Representation -->
+<div class="relative w-28 h-40 my-space-sm bg-surface-container-low rounded-t-xl rounded-b-2xl p-1.5 flex flex-col justify-end overflow-hidden shadow-inner">
+<!-- Jar Lid -->
+<div class="absolute top-0 inset-x-2 h-3.5 bg-surface-container-highest rounded-full shadow-sm"></div>
+<!-- Jar Fill Level (85%) -->
+<div class="w-full bg-primary-container/80 rounded-b-xl transition-all duration-700 flex flex-col justify-center items-center text-on-primary-container font-label-sm text-label-sm font-bold shadow-sm" style="height: 85%;">
+<span class="animate-bounce" style="animation-duration: 2s;">85%</span>
+</div>
+<!-- Glass Specular Reflection line -->
+<div class="absolute inset-y-2 left-2 w-1.5 bg-white/40 rounded-full pointer-events-none"></div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface">Basmati Rice (A-Grade)</h4>
+<p class="font-headline-sm text-headline-sm text-on-surface font-extrabold mt-0.5">320 <span class="font-label-md text-label-md text-on-surface-variant font-medium">kg</span></p>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Sufficient for 14 Days</span>
+<div class="w-full mt-space-sm pt-space-xs bg-surface-container-low/70 rounded-full px-2 py-1 text-center font-label-sm text-label-sm text-tertiary">
+            ✓ Last restocked 2 days ago
+          </div>
+</div>
+<!-- Jar 2: Toor Dal -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-md flex flex-col items-center text-center relative group hover:-translate-y-1 transition-transform duration-300">
+<div class="w-full flex justify-between items-center text-on-surface-variant pb-space-xs">
+<span class="font-label-sm text-label-sm bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded-full">Adequate</span>
+<span class="material-symbols-outlined text-[18px]">soup_kitchen</span>
+</div>
+<!-- Glass Jar Visual Representation -->
+<div class="relative w-28 h-40 my-space-sm bg-surface-container-low rounded-t-xl rounded-b-2xl p-1.5 flex flex-col justify-end overflow-hidden shadow-inner">
+<div class="absolute top-0 inset-x-2 h-3.5 bg-surface-container-highest rounded-full shadow-sm"></div>
+<!-- Jar Fill Level (65%) -->
+<div class="w-full bg-primary/70 rounded-b-xl transition-all duration-700 flex flex-col justify-center items-center text-on-primary font-label-sm text-label-sm font-bold shadow-sm" style="height: 65%;">
+<span>65%</span>
+</div>
+<div class="absolute inset-y-2 left-2 w-1.5 bg-white/40 rounded-full pointer-events-none"></div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface">Toor Dal (Yellow Lentil)</h4>
+<p class="font-headline-sm text-headline-sm text-on-surface font-extrabold mt-0.5">110 <span class="font-label-md text-label-md text-on-surface-variant font-medium">kg</span></p>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Sufficient for 8 Days</span>
+<div class="w-full mt-space-sm pt-space-xs bg-surface-container-low/70 rounded-full px-2 py-1 text-center font-label-sm text-label-sm text-on-surface-variant">
+            Next harvest batch scheduled
+          </div>
+</div>
+<!-- Jar 3: Cooking Oil (Alert) -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-md flex flex-col items-center text-center relative group hover:-translate-y-1 transition-transform duration-300 ring-2 ring-secondary/30">
+<div class="w-full flex justify-between items-center text-secondary pb-space-xs">
+<span class="font-label-sm text-label-sm bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span> Low Alert
+            </span>
+<span class="material-symbols-outlined text-[18px]">water_drop</span>
+</div>
+<!-- Glass Jar Visual Representation -->
+<div class="relative w-28 h-40 my-space-sm bg-surface-container-low rounded-t-xl rounded-b-2xl p-1.5 flex flex-col justify-end overflow-hidden shadow-inner">
+<div class="absolute top-0 inset-x-2 h-3.5 bg-surface-container-highest rounded-full shadow-sm"></div>
+<!-- Jar Fill Level (25%) -->
+<div class="w-full bg-secondary rounded-b-xl transition-all duration-700 flex flex-col justify-center items-center text-on-secondary font-label-sm text-label-sm font-bold shadow-sm" style="height: 25%;">
+<span>25%</span>
+</div>
+<div class="absolute inset-y-2 left-2 w-1.5 bg-white/40 rounded-full pointer-events-none"></div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface">Sunflower Cooking Oil</h4>
+<p class="font-headline-sm text-headline-sm text-secondary font-extrabold mt-0.5">45 <span class="font-label-md text-label-md text-on-surface-variant font-medium">Liters</span></p>
+<span class="font-body-sm text-body-sm text-secondary font-semibold mt-1">Refill in 2 Days!</span>
+<button class="w-full mt-space-sm py-1 rounded-full bg-secondary-container hover:bg-secondary text-on-secondary font-label-sm text-label-sm transition-colors shadow-sm">
+            Quick Auto-Reorder
+          </button>
+</div>
+<!-- Jar 4: Root Vegetables (Potatoes/Onions) -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-md flex flex-col items-center text-center relative group hover:-translate-y-1 transition-transform duration-300">
+<div class="w-full flex justify-between items-center text-on-surface-variant pb-space-xs">
+<span class="font-label-sm text-label-sm bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 rounded-full">Fresh Farm Drop</span>
+<span class="material-symbols-outlined text-[18px]">local_shipping</span>
+</div>
+<!-- Glass Basket / Bin Visual Representation -->
+<div class="relative w-28 h-40 my-space-sm bg-surface-container-low rounded-t-xl rounded-b-2xl p-1.5 flex flex-col justify-end overflow-hidden shadow-inner">
+<div class="absolute top-0 inset-x-2 h-3.5 bg-surface-container-highest rounded-full shadow-sm"></div>
+<!-- Jar Fill Level (90%) -->
+<div class="w-full bg-tertiary rounded-b-xl transition-all duration-700 flex flex-col justify-center items-center text-on-tertiary font-label-sm text-label-sm font-bold shadow-sm" style="height: 90%;">
+<span>90%</span>
+</div>
+<div class="absolute inset-y-2 left-2 w-1.5 bg-white/40 rounded-full pointer-events-none"></div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface">Potatoes &amp; Red Onions</h4>
+<p class="font-headline-sm text-headline-sm text-on-surface font-extrabold mt-0.5">210 <span class="font-label-md text-label-md text-on-surface-variant font-medium">kg</span></p>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Arrival: 7:00 AM Today</span>
+<div class="w-full mt-space-sm pt-space-xs bg-surface-container-low/70 rounded-full px-2 py-1 text-center font-label-sm text-label-sm text-tertiary font-bold">
+            ✓ Farm Quality Checked
+          </div>
+</div>
+</div>
+</section>
+<!-- Kitchen Notice Board & Dietary Notes -->
+<section class="w-full flex flex-col gap-space-lg mb-space-xl">
+<div class="flex items-center justify-between">
+<div>
+<div class="inline-flex items-center gap-space-xs font-label-sm text-label-sm text-primary uppercase tracking-wider mb-1">
+<span class="material-symbols-outlined text-[16px]">push_pin</span>
+<span>Pinboard &amp; Announcements</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Chef's Corkboard &amp; Dietary Hall</h2>
+</div>
+<span class="hidden sm:inline-block font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high px-space-md py-1 rounded-full">
+          Updated 35 mins ago by Chef Gopal
+        </span>
+</div>
+<!-- Post-it Styled Pinboard Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Post-it 1: Friday Feast Poll -->
+<div class="relative bg-primary-fixed text-on-primary-fixed rounded-lg p-space-lg shadow-md transform -rotate-1 hover:rotate-0 transition-transform duration-200">
+<!-- Pushpin glyph -->
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-secondary shadow-md flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[14px]">push_pin</span>
+</div>
+<div class="flex items-center gap-space-xs pt-1 pb-space-xs text-on-primary-fixed-variant">
+<span class="material-symbols-outlined text-[18px]">how_to_vote</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wide">Weekly Food Poll</span>
+</div>
+<h3 class="font-title-lg text-title-lg font-bold">Chef Gopal's Friday Feast Vote!</h3>
+<p class="font-body-md text-body-md mt-space-xs">
+            "Team! Should we prepare Hyderabadi Dum Biryani or Rich Paneer Matar Pulao for Friday night dinner? Cast your vote before 4 PM!"
+          </p>
+<div class="mt-space-md flex flex-col gap-space-xs">
+<button class="w-full flex items-center justify-between px-space-md py-2 rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-sm text-label-sm shadow-sm transition-colors" onclick="voteOption('biryani')">
+<span>🍗 Hyderabadi Dum Biryani</span>
+<strong id="poll-biryani-count">68% (184 votes)</strong>
+</button>
+<button class="w-full flex items-center justify-between px-space-md py-2 rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-sm text-label-sm shadow-sm transition-colors" onclick="voteOption('pulao')">
+<span>🧀 Royal Paneer Pulao</span>
+<strong id="poll-pulao-count">32% (88 votes)</strong>
+</button>
+</div>
+</div>
+<!-- Post-it 2: Allergen Alert -->
+<div class="relative bg-secondary-fixed text-on-secondary-fixed rounded-lg p-space-lg shadow-md transform rotate-1 hover:rotate-0 transition-transform duration-200">
+<!-- Pushpin glyph -->
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-primary shadow-md flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[14px]">push_pin</span>
+</div>
+<div class="flex items-center gap-space-xs pt-1 pb-space-xs text-on-secondary-fixed-variant">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wide">Safety &amp; Allergens</span>
+</div>
+<h3 class="font-title-lg text-title-lg font-bold">Peanut-Free Cook Counter (Station B)</h3>
+<p class="font-body-md text-body-md mt-space-xs">
+            "Strict cross-contamination protocols active. Oil fryer Station B is 100% legume &amp; peanut oil-free today. Students with allergies can request custom steam trays directly from counter cook Ramesh."
+          </p>
+<div class="mt-space-md pt-space-xs bg-surface-container-lowest/80 text-on-surface rounded-DEFAULT p-space-sm flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[24px]">contact_support</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-bold">Special Dietary Desk</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">WhatsApp Pantry Team: +91 98842-MUNCH</span>
+</div>
+</div>
+</div>
+<!-- Post-it 3: Zero Waste Hall of Fame -->
+<div class="relative bg-tertiary-fixed text-on-tertiary-fixed rounded-lg p-space-lg shadow-md transform -rotate-1 hover:rotate-0 transition-transform duration-200">
+<!-- Pushpin glyph -->
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-tertiary shadow-md flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[14px]">push_pin</span>
+</div>
+<div class="flex items-center gap-space-xs pt-1 pb-space-xs text-on-tertiary-fixed-variant">
+<span class="material-symbols-outlined text-[18px]">military_tech</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wide">Hall of Fame</span>
+</div>
+<h3 class="font-title-lg text-title-lg font-bold">Zero Waste Record Broken!</h3>
+<p class="font-body-md text-body-md mt-space-xs">
+            "Yesterday's total kitchen + dining scrap waste totaled just <strong class="underline">3.18 kg</strong> across all 1,200 meals served! Lowest in 4 terms. All compostable rind went to the community herb garden."
+          </p>
+<div class="mt-space-md bg-surface-container-lowest/80 text-on-surface rounded-DEFAULT p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="text-2xl">🌱</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-bold">Hero Wing of the Week</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Block C - Falcon Hostel</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-1 rounded-full bg-tertiary text-on-tertiary font-bold">99.8% Clean</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Action Ribbon -->
+<div class="w-full bg-surface-container-lowest rounded-lg p-space-lg shadow-md flex flex-col md:flex-row items-center justify-between gap-space-md mb-space-lg">
+<div class="flex items-center gap-space-md">
+<div class="w-14 h-14 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[32px]">smartphone</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">Install MessMunch Student Companion</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Receive automated WhatsApp notifications 15 minutes before breakfast, lunch, and dinner call.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-lg py-3 rounded-full bg-surface-container-high hover:bg-surface-container text-on-surface font-label-md text-label-md transition-all">
+          View Waste Analytics
+        </button>
+<button class="px-space-lg py-3 rounded-full bg-primary-container hover:bg-primary-fixed-dim text-on-primary-container font-label-md text-label-md shadow-sm transition-all">
+          Connect Hostel Account
+        </button>
+</div>
+</div>
+</div>
+<!-- Notification Toast Container -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="toast-box">
+<div class="bg-on-surface text-surface px-space-lg py-space-md rounded-full shadow-2xl flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px]" id="toast-icon">check_circle</span>
+<span class="font-label-md text-label-md" id="toast-text">Meal preference updated!</span>
+</div>
+</div>
+</div>
+<script>
+  function showToast(message, iconName = 'check_circle') {
+    const toastBox = document.getElementById('toast-box');
+    const toastText = document.getElementById('toast-text');
+    const toastIcon = document.getElementById('toast-icon');
+    if (!toastBox) return;
+
+    toastText.innerText = message;
+    toastIcon.innerText = iconName;
+    toastBox.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+    toastBox.classList.add('translate-y-0', 'opacity-100');
+
+    setTimeout(() => {
+      toastBox.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+      toastBox.classList.remove('translate-y-0', 'opacity-100');
+    }, 3200);
+  }
+
+  function toggleMealToken(isAttending) {
+    const btnIn = document.getElementById('btn-token-optin');
+    const btnOut = document.getElementById('btn-token-optout');
+
+    if (isAttending) {
+      if (btnIn) {
+        btnIn.classList.add('bg-tertiary', 'text-on-tertiary');
+        btnIn.classList.remove('bg-surface-container-lowest', 'text-on-surface');
+      }
+      if (btnOut) {
+        btnOut.classList.remove('bg-secondary-container', 'text-on-secondary');
+        btnOut.classList.add('bg-surface-container-lowest', 'text-secondary');
+      }
+      showToast('Yay! Meal Token Confirmed for Lunch & Dinner. Plate reserved! 🍛', 'dinner_dining');
+    } else {
+      if (btnOut) {
+        btnOut.classList.add('bg-secondary-container', 'text-on-secondary');
+        btnOut.classList.remove('bg-surface-container-lowest', 'text-secondary');
+      }
+      if (btnIn) {
+        btnIn.classList.remove('bg-tertiary', 'text-on-tertiary');
+        btnIn.classList.add('bg-surface-container-lowest', 'text-on-surface');
+      }
+      showToast('Opt-out noted! Ration cook size reduced. Thanks for stopping waste! 🌱', 'eco');
+    }
+  }
+
+  function voteOption(type) {
+    if (type === 'biryani') {
+      const el = document.getElementById('poll-biryani-count');
+      if (el) el.innerText = '69% (185 votes)';
+      showToast('Voted for Hyderabadi Dum Biryani! Spices incoming 🔥', 'restaurant');
+    } else {
+      const el = document.getElementById('poll-pulao-count');
+      if (el) el.innerText = '33% (89 votes)';
+      showToast('Voted for Royal Paneer Pulao! Chef notified 🧀', 'thumb_up');
+    }
+  }
+
+  function simulateOrderModal() {
+    showToast('Auto-PO Drafted: 50L Sunflower Oil + 100kg Toor Dal queued for approval! 🛒', 'shopping_basket');
+  }
+</script></main><footer class="w-full bg-surface-container-low py-space-lg"><div class="max-w-[1280px] mx-auto px-gutter-desktop flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><span class="font-headline-sm text-headline-sm text-on-surface">MessMunch</span><span class="font-body-sm text-body-sm text-on-surface-variant">• Friendly Community Rations &amp; Mess Hall Operations</span></div><div class="flex items-center gap-space-lg font-label-md text-label-md text-on-surface-variant"><span>Kitchen Shift: Morning &amp; Midday</span><span>Pantry Status: Well-Stocked</span><span>© 2024 MessMunch</span></div></div></footer></body></html>

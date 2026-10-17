@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+  <title>HIMRASAD — Institutional Operations Seal</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #1B2430;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    @keyframes radarSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes pulseRing {
+      0% { transform: scale(0.96); opacity: 0.8; }
+      50% { transform: scale(1.04); opacity: 0.3; }
+      100% { transform: scale(0.96); opacity: 0.8; }
+    }
+    .radar-beam {
+      transform-origin: 300px 240px;
+      animation: radarSpin 12s linear infinite;
+    }
+    .pulse-ring {
+      transform-origin: 300px 240px;
+      animation: pulseRing 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-snow">
+  <div class="fixed inset-0 w-full h-full flex items-center justify-center p-4" id="animated-svg-ANIMATION_2">
+    <svg viewBox="0 0 600 480" class="w-full max-w-xl h-auto drop-shadow-2xl" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="sealBg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#2F3A1E" stop-opacity="0.9"/>
+          <stop offset="60%" stop-color="#1B2430" stop-opacity="0.95"/>
+          <stop offset="100%" stop-color="#141C10" stop-opacity="1"/>
+        </radialGradient>
+        <linearGradient id="goldLine" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#D9A441"/>
+          <stop offset="50%" stop-color="#F5C26B"/>
+          <stop offset="100%" stop-color="#C8B88A"/>
+        </linearGradient>
+        <linearGradient id="sweepGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#D9A441" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#D9A441" stop-opacity="0.35"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Outer Shield Frame -->
+      <circle cx="300" cy="240" r="210" fill="url(#sealBg)" stroke="url(#goldLine)" stroke-width="4"/>
+      
+      <!-- Concentric Radar Rings -->
+      <circle cx="300" cy="240" r="180" stroke="#C8B88A" stroke-width="1" stroke-dasharray="3 4" stroke-opacity="0.4"/>
+      <circle cx="300" cy="240" r="140" stroke="#C8B88A" stroke-width="1.2" stroke-opacity="0.3" class="pulse-ring"/>
+      <circle cx="300" cy="240" r="90" stroke="#4F86B0" stroke-width="1" stroke-dasharray="2 4" stroke-opacity="0.5"/>
+
+      <!-- Rotating Telemetry Sweep Beam -->
+      <g class="radar-beam">
+        <path d="M 300 240 L 480 240 A 180 180 0 0 0 455 115 Z" fill="url(#sweepGrad)"/>
+        <line x1="300" y1="240" x2="480" y2="240" stroke="#D9A441" stroke-width="1.5" stroke-opacity="0.8"/>
+      </g>
+
+      <!-- High Himalayan Triple Mountain Peak Silhouette -->
+      <polygon points="170,300 300,150 430,300" fill="#141C10" stroke="#C8B88A" stroke-width="1.5" stroke-opacity="0.8"/>
+      <polygon points="300,150 430,300 300,300" fill="#4F5D2F" fill-opacity="0.6"/>
+      <polygon points="235,300 300,210 365,300" fill="#F5F7F4" fill-opacity="0.95"/>
+      
+      <!-- Flanking Mountain Ridges -->
+      <polygon points="120,320 210,210 300,320" fill="#1B2430" fill-opacity="0.7" stroke="#C8B88A" stroke-width="1"/>
+      <polygon points="300,320 390,210 480,320" fill="#1B2430" fill-opacity="0.7" stroke="#C8B88A" stroke-width="1"/>
+
+      <!-- Laurel Wheat Sheaves (Central Supply & Sustenance) -->
+      <path d="M 160 320 Q 300 380 440 320" fill="none" stroke="url(#goldLine)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M 175 332 Q 300 395 425 332" fill="none" stroke="#C8B88A" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 4"/>
+
+      <!-- Central Golden Star of Authority -->
+      <polygon points="300,90 306,108 324,108 310,120 315,138 300,126 285,138 290,120 276,108 294,108" fill="#D9A441"/>
+
+      <!-- Formal Typography Arc -->
+      <g fill="#F5F7F4" font-size="11" font-weight="700" letter-spacing="3" text-anchor="middle" font-family="'Plus Jakarta Sans', Montserrat, sans-serif">
+        <text x="300" y="70">HIMRASAD CENTRAL OPERATIONS</text>
+        <text x="300" y="420" fill="#C8B88A" font-size="10" font-family="monospace">AUTHENTICATED LEDGER • QUOTA ACTIVE</text>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<USER_REQUEST>
+ROLE
+
+You are a senior brand designer and front-end engineer. Create the complete visual identity and apply it to a Mess & Ration Management web app (React + Vite + TypeScript + Tailwind + framer-motion). The product behaviour comes from the attached PRD.md. This prompt replaces the earlier "Chibi Kitchen" visual style: keep all screens, roles and flows, change only the look.
+
+DESIGN BRIEF
+
+Theme: Himalayan border-force inspired. Disciplined, dependable, mountain-high, calm under pressure. Think olive-drab uniform, snow peaks, glacier light, high-altitude dusk, and prayer-flag colour accents. It should feel like a serious operations tool for a disciplined force: structured, legible, quietly proud. No cartoon styling, no playful mascots.
+
+Important: this is an inspired-by look, not an official identity. Do not reproduce or imitate any real police or military emblem, crest, seal, flag or insignia, and do not write any real force's name in the logo. If the client later supplies an official emblem, make the header logo slot swappable (<BrandMark /> component, one file to replace).
+
+COLOUR TOKENS (use exactly; expose as CSS variables and Tailwind theme colours)
+Token	Hex	Use
+olive	
+#4F5D2F	Primary: nav, primary buttons, table headers
+olive-deep	
+#2F3A1E	Sidebar, footer, heavy headings
+pine	
+#141C10	Text on light, deepest dark
+saffron	
+#E8861A	Accent / CTA / urgent actions
+gold	
+#D9A441	Emblem line, highlights, badges, focus rings on dark
+glacier	
+#4F86B0	Info, links, chart series
+glacier-mist	
+#BCD3E3	Subtle fills, chart tints, "open" chips
+snow	
+#F5F7F4	Page background
+sand	
+#C8B88A	Dividers, secondary surfaces, borders
+night	
+#1B2430	Hero, dark surfaces, login screen
+danger	
+#B3261E	Errors, low stock, destructive
+success	
+#2E7D4F	Healthy stock, confirmations
+
+Contrast rules (measured): snow on olive 6.6:1 ✓ · night on saffron 5.9:1 ✓ · night on gold 7.0:1 ✓ · snow on danger 6.1:1 ✓ · snow on success 4.7:1 ✓ · snow on glacier only 3.6:1, so use it for large text (≥ 18.66px bold) or use night text on glacier-mist instead. Never put saffron text on snow for body copy.
+
+Semantic mapping: stock Healthy = success, Adequate = glacier-mist, Expiring = gold, Low = danger, Open PO = glacier-mist, Partial = gold, Closed = olive. Always pair colour with an icon and a text label.
+
+TYPOGRAPHY
+Headings: Montserrat 700/800, slight letter-spacing (0.02 to 0.06em) on uppercase labels and the wordmark.
+Body/UI: Inter 400/500/600, tabular numerals for all quantities and money.
+Scale: 12 / 14 / 16 / 20 / 24 / 32 / 48. Base 16px. Table text 14px.
+SHAPE, DEPTH, SPACING
+Radius: 8px controls, 12px cards, 999px badges. Crisp, not bubbly.
+Borders: 1px sand on cards; 2px olive for secondary buttons.
+Shadows: subtle and low (0 1px 2px rgba(20,28,16,.08), 0 4px 12px rgba(20,28,16,.06)). No hard cartoon shadows, no gradients on UI chrome (gradients only in the hero artwork).
+8px spacing grid; 12-col layout, max width 1280px.
+A thin 3px gold line under the top bar as the signature detail.
+Optional subtle topographic-contour line pattern (sand at 10% opacity) behind empty states and the login screen.
+BRAND ASSETS (create, or refine the attached ones)
+
+Deliver in /public/brand/:
+
+logo-shield.svg: shield badge: olive-deep shield, gold outline, night-sky inner panel, saffron sun, three snow peaks, olive field, gold wheat ear (symbol of ration/supply). Original artwork only.
+logo-lockup-light.svg / logo-lockup-dark.svg: shield + "HIMRASAD" wordmark (Montserrat 800, letter-spacing 6) + saffron underline + "MESS & RATION MANAGEMENT" tagline in small caps.
+logo-mono-dark.svg / logo-mono-white.svg: single-colour versions for print, stamps, watermarks.
+favicon.svg plus PNG exports (16, 32, 180, 512) and a manifest.webmanifest with theme colour 
+#4F5D2F.
+hero-himalaya.svg: layered mountain ridges at dusk, saffron sunrise glow, strand of prayer-flag-coloured pennants (glacier, snow, danger, success, gold). Keep it calm and flat-illustrated. Also generate 3 additional AI images with your image model, all illustrated, no real people, no uniforms, no insignia: (a) login background: misty pine valley at dawn with contour lines, (b) empty-state illustration: small mountain-hut storehouse with sacks of grain, (c) 404/403 illustration: a closed gate on a mountain pass with a snow marker.
+tokens.json (Tokens Studio format for Figma import) and brand.css with the variables above.
+A /brand route: a living brand page showing logo variants and clear-space rules (clear space = height of the wheat ear), minimum sizes (shield 24px, lockup 120px wide), palette, type, buttons/inputs/badges/table/alert in every state, and a "do / don't" panel.
+APPLY THE THEME TO THE APP
+Top bar: olive-deep background, snow text, shield + wordmark left, role pill nav, notification bell, avatar with role chip. 3px gold line beneath.
+Login: split screen. Left: night panel with hero image, lockup and one short line ("Every ration accounted for."). Right: snow card with the form.
+Dashboards: snow background, white cards, stat tiles with a 4px left border in a semantic colour, charts in glacier / olive / saffron / gold (max 4 series, direct labels where possible).
+Primary button: olive with snow text. CTA/urgent button: saffron with night text. Destructive: danger. Secondary: 2px olive outline.
+Focus ring: 3px gold on dark backgrounds, 3px glacier on light, always visible.
+Tables: olive header row, zebra rows in snow/white, sand dividers, sticky header, right-aligned numbers.
+Stock indicators: replace the cartoon jars with altitude-gauge bars: a horizontal bar with tick marks and a small peak-shaped marker at the current level; colour per semantic mapping; number and unit always shown.
+Empty/error pages: use the illustrations above with calm, plain copy.
+Dark mode: night background, olive-deep cards, snow text, same accents. Offer a toggle in the profile menu (nice to have).
+MOTION (framer-motion, restrained)
+
+Page fade + 8px rise (200ms), 40ms stagger on dashboard tiles, number count-up on stat tiles, bar fills ease-out (500ms), subtle button press (scale .98). Respect prefers-reduced-motion. No confetti, no bouncing.
+
+ACCESSIBILITY & QUALITY
+
+WCAG AA everywhere (follow the contrast table above), visible focus, 44px touch targets, labelled inputs, never colour-only meaning, responsive at 360 / 768 / 1024 / 1440px.
+
+OUTPUT & PROCESS
+First produce the brand assets and the /brand page. Stop and show me the logo variants and hero for approval.
+Then restyle the app shell, login and one dashboard as a vertical slice. Stop and show me.
+Then roll the theme across all roles. At each step list what changed, any contrast issues found and fixed, and any asset that still needs a human designer's review. Add BRAND_README.md with token usage rules and how to swap in an official logo.
+
+
+i've attaached all the icons and svg files and new colour pallete in this directory named hero himlayan and other logo and favicon named.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-13T17:44:11+05:30.
+
+The user's current state is as follows:
+Active Document: c:\Users\RIYAN\Desktop\Projects\mess management\RMS-Ration Management System .txt (LANGUAGE_PLAINTEXT)
+Cursor is on line: 19
+Other open documents:
+- c:\Users\RIYAN\Desktop\Projects\mess management\src\components\Card.tsx (LANGUAGE_TSX)
+- c:\Users\RIYAN\Desktop\Projects\mess management\src\roles\admin\MessesView.tsx (LANGUAGE_TSX)
+- c:\Users\RIYAN\Desktop\Projects\mess management\src\roles\admin\VendorsView.tsx (LANGUAGE_TSX)
+- c:\Users\RIYAN\Desktop\Projects\mess management\src\roles\admin\UsersView.tsx (LANGUAGE_TSX)
+- c:\Users\RIYAN\Desktop\Projects\mess management\src\roles\admin\AuditLogView.tsx (LANGUAGE_TSX)
+Browser State:
+  Page 1CB1D8D38E3673F99B08E0A015C38DA0 (MessMunch — Smart Mess & Ration Tracker) - http://localhost:3000/admin [ACTIVE]
+    Viewport: 1536x872, Page Height: 1332
+</ADDITIONAL_METADATA>
