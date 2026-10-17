@@ -13,44 +13,104 @@ import {
   AppUser,
   UserRole,
 } from '../types';
+import { getOrCreateCsrfToken, sanitizePayload, recordSecurityEvent } from '../utils/security';
 
 const API_BASE = '/api';
+const REQUEST_TIMEOUT_MS = 15_000;
 
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem('messmunch_token');
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-Token': getOrCreateCsrfToken(),
   };
+
   if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
+    try {
+      // Decode and check expiration
+      const payload = JSON.parse(atob(token));
+      const now = Math.floor(Date.now() / 1000);
+      if (payload.exp && payload.exp < now) {
+        // Token has expired! Purge it.
+        localStorage.removeItem('messmunch_token');
+        localStorage.removeItem('messmunch_user');
+        recordSecurityEvent({
+          type: 'INVALID_TOKEN',
+          severity: 'MEDIUM',
+          details: 'Expired JWT detected during outbound request header construction. Token cleared.',
+        });
+      } else {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+    } catch {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
   }
+
   return headers;
 }
 
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE}${endpoint}`;
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      ...getAuthHeaders(),
-      ...options.headers,
-    },
-  });
 
-  if (!response.ok) {
-    let errorMsg = `Request failed: ${response.status} ${response.statusText}`;
+  // Sanitize body if it is JSON string
+  let sanitizedBody = options.body;
+  if (typeof options.body === 'string') {
     try {
-      const data = await response.json();
-      if (data && data.error) {
-        errorMsg = data.error;
-      }
+      const parsed = JSON.parse(options.body);
+      sanitizedBody = JSON.stringify(sanitizePayload(parsed));
     } catch {
-      // ignore
+      // not JSON, keep as is
     }
-    throw new Error(errorMsg);
   }
 
-  return response.json();
+  // AbortController timeout mechanism
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      body: sanitizedBody,
+      signal: controller.signal,
+      headers: {
+        ...getAuthHeaders(),
+        ...options.headers,
+      },
+    });
+
+    if (!response.ok) {
+      let errorMsg = `Request failed: ${response.status} ${response.statusText}`;
+      try {
+        const data = await response.json();
+        if (data && data.error) {
+          errorMsg = data.error;
+        }
+      } catch {
+        // ignore
+      }
+
+      if (response.status === 401 || response.status === 403) {
+        recordSecurityEvent({
+          type: 'UNAUTHORIZED_ACCESS_ATTEMPT',
+          severity: 'HIGH',
+          details: `HTTP ${response.status} rejected on ${endpoint}: ${errorMsg}`,
+        });
+      }
+
+      throw new Error(errorMsg);
+    }
+
+    return response.json();
+  } catch (err: unknown) {
+    if (err instanceof Error && err.name === 'AbortError') {
+      throw new Error(`Operational network timeout (${REQUEST_TIMEOUT_MS / 1000}s) exceeded for ${endpoint}`);
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeoutId);
+  }
 }
 
 export const api = {
@@ -184,4 +244,3 @@ export const api = {
       }),
   },
 };
-

@@ -19,7 +19,11 @@ import {
   ShieldCheck,
   FileCheck,
   TrendingUp,
+  Eye,
+  EyeOff,
+  Lock,
 } from 'lucide-react';
+import { maskSensitive, isStrictPositiveNumber, sanitizeInput } from '../../utils/security';
 
 export const PaymentsView: React.FC = () => {
   const { toast } = useToast();
@@ -32,6 +36,7 @@ export const PaymentsView: React.FC = () => {
   const [isDisburseModalOpen, setIsDisburseModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedVoucher, setSelectedVoucher] = useState<Expenditure | null>(null);
+  const [isMasked, setIsMasked] = useState(true); // Privacy-by-default standard
 
   // Form state
   const [selectedPoId, setSelectedPoId] = useState('');
@@ -72,8 +77,8 @@ export const PaymentsView: React.FC = () => {
       return;
     }
     const amount = parseFloat(paymentAmount);
-    if (!amount || amount <= 0) {
-      toast({ type: 'error', title: 'Invalid Amount', message: 'Enter a valid disbursement amount.' });
+    if (!isStrictPositiveNumber(amount)) {
+      toast({ type: 'error', title: 'Invalid Amount', message: 'Enter a valid positive disbursement amount.' });
       return;
     }
 
@@ -188,6 +193,15 @@ export const PaymentsView: React.FC = () => {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsMasked(!isMasked)}
+            icon={isMasked ? <Eye className="w-4 h-4 text-gold" /> : <EyeOff className="w-4 h-4 text-sand" />}
+            className="text-snow border-sand/40 hover:bg-olive-deep font-mono text-xs"
+          >
+            {isMasked ? 'Reveal Identifiers' : 'Mask Identifiers'}
+          </Button>
           <Button
             variant="outline"
             size="sm"
@@ -327,7 +341,7 @@ export const PaymentsView: React.FC = () => {
                           {v ? v.name : e.vendor_id}
                         </div>
                         <div className="text-[10px] text-pine/60 font-mono mt-0.5">
-                          GSTIN: {v?.tax_id || '29AAAAA0000A1Z5'}
+                          GSTIN: {isMasked ? maskSensitive(v?.tax_id || '29AAAAA0000A1Z5', 2, 3) : (v?.tax_id || '29AAAAA0000A1Z5')}
                         </div>
                       </td>
 

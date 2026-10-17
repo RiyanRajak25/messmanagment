@@ -9,6 +9,7 @@ import { Forbidden } from './pages/Forbidden';
 import { NotFound } from './pages/NotFound';
 import { DesignSystem } from './pages/DesignSystem';
 import { BrandPage } from './pages/BrandPage';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Lazy-loaded role-split modules
 const AdminDashboard = React.lazy(() => import('./roles/admin/AdminDashboard'));
@@ -63,9 +64,10 @@ const RootRedirect: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <ToastProvider>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <AuthProvider>
+          <ToastProvider>
           <Routes>
             {/* Public Auth Screen */}
             <Route path="/login" element={<Login />} />
@@ -207,6 +209,7 @@ export const App: React.FC = () => {
         </ToastProvider>
       </AuthProvider>
     </BrowserRouter>
+  </ErrorBoundary>
   );
 };
 
