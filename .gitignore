@@ -1,18 +1,9 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
 # Dependencies
 node_modules/
 .pnp
 .pnp.js
 
-# Production build output
+# Production build outputs
 dist/
 dist-ssr/
 build/
@@ -26,20 +17,27 @@ out/
 .env.production.local
 *.env
 
-# Test coverage
+# Cache & Bundler
+.vite/
+.cache/
+.temp/
+*.tsbuildinfo
+
+# Test & Coverage
 coverage/
 *.lcov
 .nyc_output
 
-# Vite and bundler cache
-.vite/
-.cache/
-.temp/
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# TypeScript cache
-*.tsbuildinfo
-
-# IDE & Editor files
+# Editor & IDE
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
@@ -52,7 +50,7 @@ coverage/
 *.sublime-workspace
 *.sublime-project
 
-# OS generated files
+# OS files
 .DS_Store
 .DS_Store?
 ._*
@@ -61,3 +59,24 @@ coverage/
 ehthumbs.db
 Thumbs.db
 [Dd]esktop.ini
+
+# Scratch, specs, prompt dumps, PDFs, and archives
+*.pdf
+*.zip
+*.tar.gz
+/*.txt
+/full_master_spec.md
+/animated_svg.html
+/stitch_chibi_mess_ration_tracker/
+
+# Loose duplicate brand exports in root (canonical assets are in public/brand/)
+/palette-board.png
+/hero-himalaya.png
+/hero-himalaya.svg
+/logo-lockup-dark.png
+/logo-lockup-dark.svg
+/logo-lockup-light.svg
+/logo-mono-dark.svg
+/logo-mono-white.svg
+/logo-shield.svg
+/favicon.svg
